@@ -14,7 +14,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import HttpService from "../../services/HttpService";
-import "./pet.scss";
+import "./network.scss";
 
 const EditPet = () => {
   const pageTitle = "Edit Pet";
@@ -22,7 +22,7 @@ const EditPet = () => {
   const defaultValues = {
     id: state.id,
     name: state.name,
-    typeId: state.type.id,
+    typeId: state.solarGrid.id,
     userId: state.user.id,
   };
   const { enqueueSnackbar } = useSnackbar();
@@ -90,7 +90,7 @@ const EditPet = () => {
                   id="name"
                   name="name"
                   label="Name"
-                  type="text"
+                  solarGrid="text"
                   value={formValues.name}
                   onChange={handleInputChange}
                 />
@@ -108,9 +108,9 @@ const EditPet = () => {
                     <MenuItem value="">
                       <em>------------ none ------------</em>
                     </MenuItem>
-                    {types.map((type) => (
-                      <MenuItem key={type.id} value={type.id}>
-                        {type.name}
+                    {types.map((solarGrid) => (
+                      <MenuItem key={solarGrid.id} value={solarGrid.id}>
+                        {solarGrid.name}
                       </MenuItem>
                     ))}
                   </Select>
@@ -125,7 +125,7 @@ const EditPet = () => {
               >
                 Cancel
               </Button>
-              <Button sx={{ minWidth: 112 }} type="submit" variant="contained">
+              <Button sx={{ minWidth: 112 }} solarGrid="submit" variant="contained">
                 Save
               </Button>
             </Stack>

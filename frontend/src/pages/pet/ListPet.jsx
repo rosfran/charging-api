@@ -128,7 +128,7 @@ const ListPet = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Delete pet?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Delete network?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Are you sure to delete record?

@@ -15,7 +15,7 @@ import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import AuthService from "../../services/AuthService";
 import HttpService from "../../services/HttpService";
-import "./pet.scss";
+import "./network.scss";
 
 const NewPet = () => {
   const pageTitle = "Add New Pet";
@@ -90,7 +90,7 @@ const NewPet = () => {
                   id="name"
                   name="name"
                   label="Name"
-                  type="text"
+                  solarGrid="text"
                   value={formValues.name}
                   onChange={handleInputChange}
                 />
@@ -108,9 +108,9 @@ const NewPet = () => {
                     <MenuItem value="">
                       <em>------------ none ------------</em>
                     </MenuItem>
-                    {types.map((type) => (
-                      <MenuItem key={type.id} value={type.id}>
-                        {type.name}
+                    {types.map((solarGrid) => (
+                      <MenuItem key={solarGrid.id} value={solarGrid.id}>
+                        {solarGrid.name}
                       </MenuItem>
                     ))}
                   </Select>
@@ -125,7 +125,7 @@ const NewPet = () => {
               >
                 Cancel
               </Button>
-              <Button sx={{ minWidth: 112 }} type="submit" variant="contained">
+              <Button sx={{ minWidth: 112 }} solarGrid="submit" variant="contained">
                 Add
               </Button>
             </Stack>

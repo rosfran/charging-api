@@ -8,11 +8,11 @@
         <version>3.0.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.github.yildizmy</groupId>
-    <artifactId>pet-clinic</artifactId>
+    <groupId>com.fastned.fastcharging</groupId>
+    <artifactId>charging-fast</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>pet-clinic</name>
-    <description>Spring Boot app used for managing pets and vets data</description>
+    <name>charging-fast</name>
+    <description>REST API to manage solar panels, grids and networks</description>
     <properties>
         <java.version>17</java.version>
         <projectlombok.version>1.18.26</projectlombok.version>

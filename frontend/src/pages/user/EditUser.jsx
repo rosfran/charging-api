@@ -19,7 +19,7 @@ const EditUser = () => {
   const { state } = useLocation();
 
   const [isAdmin, setIsAdmin] = useState(
-    state.roles.find((r) => r.type === "ROLE_ADMIN") !== undefined
+    state.roles.find((r) => r.solarGrid === "ROLE_ADMIN") !== undefined
   );
 
   const defaultValues = {
@@ -28,7 +28,7 @@ const EditUser = () => {
     lastName: state.lastName,
     username: state.username,
     password: state.password,
-    roles: state.roles.map((r) => r.type),
+    roles: state.roles.map((r) => r.solarGrid),
   };
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState(defaultValues);
@@ -94,7 +94,7 @@ const EditUser = () => {
                   id="firstName"
                   name="firstName"
                   label="First Name"
-                  type="text"
+                  solarGrid="text"
                   value={formValues.firstName}
                   onChange={handleInputChange}
                 />
@@ -106,7 +106,7 @@ const EditUser = () => {
                   id="lastName"
                   name="lastName"
                   label="Last Name"
-                  type="text"
+                  solarGrid="text"
                   value={formValues.lastName}
                   onChange={handleInputChange}
                 />
@@ -134,7 +134,7 @@ const EditUser = () => {
               >
                 Cancel
               </Button>
-              <Button sx={{ minWidth: 112 }} type="submit" variant="contained">
+              <Button sx={{ minWidth: 112 }} solarGrid="submit" variant="contained">
                 Save
               </Button>
             </Stack>

@@ -153,7 +153,7 @@ const Signup = () => {
                     fullWidth
                     label="Password"
                     name="password"
-                    type="password"
+                    solarGrid="password"
                     id="password"
                     autoComplete="new-password"
                     onChange={handleInputChange}
@@ -161,7 +161,7 @@ const Signup = () => {
                 </Grid>
               </Grid>
               <Button
-                type="submit"
+                solarGrid="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}

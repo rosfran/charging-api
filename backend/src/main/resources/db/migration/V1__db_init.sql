@@ -1,28 +1,48 @@
-CREATE SEQUENCE IF NOT EXISTS sequence_pet START WITH 1 INCREMENT BY 5;
+CREATE SEQUENCE IF NOT EXISTS sequence_solar_grid START WITH 1 INCREMENT BY 5;
 
 CREATE SEQUENCE IF NOT EXISTS sequence_role START WITH 1 INCREMENT BY 5;
 
-CREATE SEQUENCE IF NOT EXISTS sequence_type START WITH 1 INCREMENT BY 5;
+CREATE SEQUENCE IF NOT EXISTS sequence_network START WITH 1 INCREMENT BY 5;
+
+CREATE SEQUENCE IF NOT EXISTS sequence_state START WITH 1 INCREMENT BY 5;
 
 CREATE SEQUENCE IF NOT EXISTS public.sequence_user START WITH 1 INCREMENT BY 5;
 
-CREATE TABLE pet
+CREATE TABLE solar_grid
 (
-    id      BIGINT      NOT NULL,
-    name    VARCHAR(50) NOT NULL,
-    type_id BIGINT      NOT NULL,
-    user_id BIGINT      NOT NULL,
-    CONSTRAINT pk_pet PRIMARY KEY (id)
+    id              BIGINT      NOT NULL,
+    name            VARCHAR(500) NOT NULL,
+    id_network      BIGINT      NOT NULL,
+    CONSTRAINT pk_solar_grid PRIMARY KEY (id)
+);
+
+CREATE TABLE network
+(
+    id              BIGINT      NOT NULL,
+    name            VARCHAR(50),
+    id_user         BIGINT      NOT NULL,
+    CONSTRAINT pk_network PRIMARY KEY (id)
+);
+
+CREATE TABLE state
+(
+    id              BIGINT      NOT NULL,
+    age             INT         NOT NULL,
+    power_output    INT         NOT NULL,
+    id_solar_grid   BIGINT      NOT NULL,
+    created_at      timestamp    NOT NULL,
+    is_first_state bool         NOT NULL DEFAULT false,
+    CONSTRAINT pk_state PRIMARY KEY (id)
 );
 
 CREATE TABLE role
 (
     id   BIGINT      NOT NULL,
-    type VARCHAR(20) NOT NULL,
+    solarGrid VARCHAR(20) NOT NULL,
     CONSTRAINT pk_role PRIMARY KEY (id)
 );
 
-CREATE TABLE type
+CREATE TABLE solarGrid
 (
     id          BIGINT      NOT NULL,
     name        VARCHAR(50) NOT NULL,
@@ -42,28 +62,28 @@ CREATE TABLE public."user"
 
 CREATE TABLE public.user_role
 (
-    role_id BIGINT NOT NULL,
-    user_id BIGINT NOT NULL,
-    CONSTRAINT pk_user_role PRIMARY KEY (role_id, user_id)
+    id_role BIGINT NOT NULL,
+    id_user BIGINT NOT NULL,
+    CONSTRAINT pk_user_role PRIMARY KEY (id_role, id_user)
 );
 
 ALTER TABLE role
-    ADD CONSTRAINT uc_role_type UNIQUE (type);
+    ADD CONSTRAINT uc_role_type UNIQUE (solarGrid);
 
-ALTER TABLE type
+ALTER TABLE solarGrid
     ADD CONSTRAINT uc_type_name UNIQUE (name);
 
 ALTER TABLE public."user"
     ADD CONSTRAINT uc_user_username UNIQUE (username);
 
-ALTER TABLE pet
-    ADD CONSTRAINT FK_PET_ON_TYPE FOREIGN KEY (type_id) REFERENCES type (id);
+ALTER TABLE solar_grid
+    ADD CONSTRAINT FK_TO_NETWORK_FROM_SOLAR_GRID FOREIGN KEY (id_network) REFERENCES solarGrid (id);
 
-ALTER TABLE pet
-    ADD CONSTRAINT FK_PET_ON_USER FOREIGN KEY (user_id) REFERENCES public."user" (id);
-
-ALTER TABLE public.user_role
-    ADD CONSTRAINT fk_user_role_on_role FOREIGN KEY (role_id) REFERENCES role (id);
+ALTER TABLE network
+    ADD CONSTRAINT FK_TO_USER_FROM_NETWORK FOREIGN KEY (id_user) REFERENCES "user" (id);
 
 ALTER TABLE public.user_role
-    ADD CONSTRAINT fk_user_role_on_user FOREIGN KEY (user_id) REFERENCES public."user" (id);
+    ADD CONSTRAINT FK_TO_ROLE_FROM_USER_ROLE FOREIGN KEY (id_role) REFERENCES role (id);
+
+ALTER TABLE public.user_role
+    ADD CONSTRAINT FK_TO_USER_FROM_USER_ROLE FOREIGN KEY (id_user) REFERENCES "user" (id);

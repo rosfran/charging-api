@@ -174,13 +174,13 @@ function Row(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {pets.map((pet) => (
-                    <TableRow key={pet.id}>
+                  {pets.map((network) => (
+                    <TableRow key={network.id}>
                       <TableCell component="th" scope="row">
-                        {pet.name}
+                        {network.name}
                       </TableCell>
                       <TableCell component="th" scope="row">
-                        {pet.type.name}
+                        {network.solarGrid.name}
                       </TableCell>
                     </TableRow>
                   ))}

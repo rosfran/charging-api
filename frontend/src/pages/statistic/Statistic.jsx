@@ -49,7 +49,7 @@ const Statistic = () => {
   const [data, setData] = useState();
   const [types, setTypes] = useState([]);
   const [values, setValues] = useState([]);
-  const [chartData, setChartData] = useState([["Type", "Numbers per type"]]);
+  const [chartData, setChartData] = useState([["Type", "Numbers per solarGrid"]]);
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -91,7 +91,7 @@ const Statistic = () => {
 
   const handleChange = (event) => {
     setValues(event?.target?.value || []);
-    setChartData([["Type", "Numbers per type"]]);
+    setChartData([["Type", "Numbers per solarGrid"]]);
   };
 
   const renderValue = (selected) =>
@@ -120,10 +120,10 @@ const Statistic = () => {
               renderValue={renderValue}
               MenuProps={MenuProps}
             >
-              {types.map((type) => (
-                <MenuItem key={type.id} value={type}>
-                  <Checkbox checked={isChecked(type.id)} />
-                  <ListItemText primary={type.name} />
+              {types.map((solarGrid) => (
+                <MenuItem key={solarGrid.id} value={solarGrid}>
+                  <Checkbox checked={isChecked(solarGrid.id)} />
+                  <ListItemText primary={solarGrid.name} />
                 </MenuItem>
               ))}
             </Select>

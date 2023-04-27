@@ -70,7 +70,7 @@ const EditProfile = () => {
                   id="firstName"
                   name="firstName"
                   label="First Name"
-                  type="text"
+                  solarGrid="text"
                   value={formValues.firstName}
                   onChange={handleInputChange}
                 />
@@ -82,7 +82,7 @@ const EditProfile = () => {
                   id="lastName"
                   name="lastName"
                   label="Last Name"
-                  type="text"
+                  solarGrid="text"
                   value={formValues.lastName}
                   onChange={handleInputChange}
                 />
@@ -96,7 +96,7 @@ const EditProfile = () => {
               >
                 Cancel
               </Button>
-              <Button sx={{ minWidth: 112 }} type="submit" variant="contained">
+              <Button sx={{ minWidth: 112 }} solarGrid="submit" variant="contained">
                 Save
               </Button>
             </Stack>
