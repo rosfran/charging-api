@@ -18,7 +18,7 @@ The following apps should be installed before running the application:
 
 <br/>
 
-### Running app in Development mode
+### Running the app - Backend and Frontend
 
 In order to run the application in development mode, apply the following steps:
 
@@ -26,123 +26,41 @@ In order to run the application in development mode, apply the following steps:
 
 <br/>
 
-
 2. Open command prompt window and clone the project from GitHub using the following command:
 
 ```
-git clone https://github.com/yildizmy/network-clinic.git
-```
-<br/>
-
-
-
-3. Change the current directory to the project directory where the `docker-compose.yml` file is in:
-
-```
-cd network-clinic
-```
-<br/>
-
-
-4. Run the following command (by running this command, the database container is built and starts up):
-
-```
-docker compose up --build
-```
-
-<br/>
-
-5. Open backend project using IntelliJ IDEA and then select _Run > Edit Configurations_ and add the following values to the **Environment variables** field.  
-
-```
-DB_NAME=pet_clinic;DB_USERNAME=postgres;DB_PASSWORD=pass;JWT_SECRET=appSecretKey
-```
-
-> **Note**  <br/>
-> If the _Environment variables_ field is not available, it can be added via _Modify options_ menu on the _Rub/Debug Configurations_ dialog (Alt+E).
-
-<br/>
-
-Then close the dialog and run the application.
-
-> **Note** <br/>
-> If _Lombok requires enabled annotation processing_ dialog appears at this stage, click _Enable annotation processing_ button.
-
-<br/>
-
-6. Open another command prompt window/tab and change the current directory to the frontend project:
-
-```
-cd network-clinic/frontend
-```
-<br/>
-
-7. Run the following commands respectively:
-
-```
-npm install
-```
-
-```
-npm start
-```
-
-<br/>
-
-Then the application starts on http://localhost:3000/ and will be opened on your default browser. At this step, the following accounts can be used for logging in to the application.
-Alternatively, API requests can be sent to the endpoints using Postman, etc. For this purpose, see the details on [How to test?](how_to_test.md) section.
-<br/>
-
-### User Accounts
-
-```
-username: johndoe
-password: johnd@e
-role: admin
-
-username: lindacalvin
-password: lindac@lvin
-role: admin
-
-username: jeffreytaylor
-password: jeffreyt@ylor
-role: user
-```
-
-<br/>
-
-
-### Running app in Production mode
-
-In order to run the application in production mode, apply the following steps:
-
-1. Run Docker desktop.
-
-<br/>
-
-2. Open command prompt window and clone the project from GitHub using the following command:
-
-```
-git clone https://github.com/yildizmy/network-clinic.git
+git clone https://gitlab.com/fastned-recruitment/backend/19042023-rosfran-lins-borges.git
 ```
 <br/>
 
 3. Change the current directory to the project directory where the `docker-compose.yml` file is in:
 
 ```
-cd network-clinic
+cd fast-charging
 ```
 <br/>
 
 4. Run the following command:
 
-> **Warning** <br/>
-> Before running this command, if exists, delete previously composed containers (`db`, `backend`, `frontend`), images (`network-clinic-backend`, `network-clinic-frontend`) and volumes (`network-clinic_db-data`) belonging to the application. 
-On the other hand, if the app is running on IntelliJ IDEA, stop it to prevent a possible port error. 
+```
+docker compose -f docker-compose.yml up --build
+```
+
+<br/>
+
+Then the Frontend application written in React starts on http://localhost:3000/ and will be opened on your default browser. At this step, the following accounts can be used for logging in to the application.
+Alternatively, API requests can be sent to the endpoints using Postman, etc. For this purpose, see the details on [How to test?](how_to_test.md) section.
+<br/>
+
+### User Account
+```
+username: johndoe
+password: johnd@e
+role: admin
 
 ```
-docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build
-```
+
+<br/>
 
 <br/>
 

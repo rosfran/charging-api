@@ -5,12 +5,11 @@ import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import Unauthorized from "./pages/auth/Unauthorized";
 import Home from "./pages/home/Home";
-import EditPet from "./pages/pet/EditPet";
-import ListPet from "./pages/pet/ListPet";
-import NewPet from "./pages/pet/NewPet";
+import EditSolarGrid from "./pages/solargrid/EditSolarGrid";
+import ListSolarGrids from "./pages/solargrid/ListSolarGrids";
+import NewSolarGrid from "./pages/solargrid/NewSolarGrid";
 import EditProfile from "./pages/profile/EditProfile";
 import Profile from "./pages/profile/Profile";
-import Statistic from "./pages/statistic/Statistic";
 import EditUser from "./pages/user/EditUser";
 import ListUser from "./pages/user/ListUser";
 import PrivateRoute from "./PrivateRoute";
@@ -37,15 +36,15 @@ function App() {
               <Route path="home" element={<Home />} />
             </Route>
 
-            <Route path="pets" element={<PrivateRoute />}>
+            <Route path="solargrid" element={<PrivateRoute />}>
               <Route element={<RoleAccess roles={["ROLE_USER"]} />} >
-                <Route index element={<ListPet />} />
+                <Route index element={<ListSolarGrids />} />
               </Route>
               <Route element={<RoleAccess roles={["ROLE_USER"]} />} >
-                <Route path="new" element={<NewPet />} />
+                <Route path="new" element={<NewSolarGrid />} />
               </Route>
               <Route element={<RoleAccess roles={["ROLE_USER"]} />} >
-                <Route path="edit" element={<EditPet />} />
+                <Route path="edit" element={<EditSolarGrid />} />
               </Route>
             </Route>
 
@@ -67,11 +66,6 @@ function App() {
               </Route>
             </Route>
 
-            <Route path="statistics" element={<PrivateRoute />}>
-              <Route element={<RoleAccess roles={["ROLE_ADMIN"]} />} >
-                <Route index element={<Statistic />} />
-              </Route>
-            </Route>
 
           </Routes>
         </Fragment>

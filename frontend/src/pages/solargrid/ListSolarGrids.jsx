@@ -14,10 +14,10 @@ import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import AuthService from "../../services/AuthService";
 import HttpService from "../../services/HttpService";
-import { petColumns } from "./fields";
+import { solarGridColumns } from "./fields";
 
 const ListPet = () => {
-  const pageTitle = "My Pets";
+  const pageTitle = "Solar Grids";
   const navigate = useNavigate();
   const [id, setId] = useState();
   const [data, setData] = useState([]);
@@ -30,7 +30,7 @@ const ListPet = () => {
 
   const fetchData = () => {
     const userId = AuthService.getCurrentUser()?.id;
-    HttpService.getWithAuth("/pets/users/" + userId)
+    HttpService.getWithAuth("/api/v1/solar-grid" + userId)
       .then((response) => {
         setData(response.data);
       })
@@ -50,7 +50,7 @@ const ListPet = () => {
   };
 
   const handleEdit = (params) => {
-    navigate("/pets/edit", { state: params.row });
+    navigate("/solargrid/edit", { state: params.row });
   };
 
   const handleClickOpen = (id) => {
@@ -63,11 +63,11 @@ const ListPet = () => {
   };
 
   const handleDelete = () => {
-    HttpService.deleteWithAuth("/pets/" + id)
+    HttpService.deleteWithAuth("/api/v1/solar-grid/" + id)
       .then((res) => {
         fetchData();
         setOpen(false);
-        enqueueSnackbar("Pet is deleted successfully", { variant: "success" });
+        enqueueSnackbar("Solar Grid deleted successfully", { variant: "success" });
       })
       .catch((error) => {
         if (error.response?.data?.errors) {
@@ -116,10 +116,10 @@ const ListPet = () => {
         <Navbar />
         <Datatable
           title={pageTitle}
-          userColumns={petColumns}
+          userColumns={solarGridColumns}
           actionColumn={actionColumn}
           data={data}
-          to={"/pets/new"}
+          to={"/api/v1/solar-grid/"}
         />
       </div>
       <Dialog
@@ -128,7 +128,7 @@ const ListPet = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Delete network?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Delete solar grid?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Are you sure to delete record?

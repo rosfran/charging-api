@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import "./home.scss";
 
 const Home = () => {
-  const pageTitle = "Home";
+  const pageTitle = "Home - Fast Charging";
 
   return (
     <div className="single">

@@ -1,16 +1,22 @@
 package com.fastned.solarcharging.service;
 
 import com.fastned.solarcharging.common.Constants;
-import com.fastned.solarcharging.dto.request.SolarGridRequest;
-import com.fastned.solarcharging.dto.response.SolarGridResponse;
-import com.fastned.solarcharging.exception.ElementAlreadyExistsException;
-import com.fastned.solarcharging.exception.NoSuchElementFoundException;
-import com.fastned.solarcharging.repository.SolarGridRepository;
-import com.fastned.solarcharging.repository.NetworkRepository;
 import com.fastned.solarcharging.dto.mapper.SolarGridRequestMapper;
 import com.fastned.solarcharging.dto.mapper.SolarGridResponseMapper;
+import com.fastned.solarcharging.dto.mapper.StateRequestMapper;
+import com.fastned.solarcharging.dto.mapper.StateResponseMapper;
+import com.fastned.solarcharging.dto.request.SolarGridRequest;
+import com.fastned.solarcharging.dto.request.StateRequest;
 import com.fastned.solarcharging.dto.response.CommandResponse;
+import com.fastned.solarcharging.dto.response.SolarGridResponse;
+import com.fastned.solarcharging.dto.response.StateResponse;
+import com.fastned.solarcharging.exception.ElementAlreadyExistsException;
+import com.fastned.solarcharging.exception.NoSuchElementFoundException;
 import com.fastned.solarcharging.model.SolarGrid;
+import com.fastned.solarcharging.model.State;
+import com.fastned.solarcharging.repository.NetworkRepository;
+import com.fastned.solarcharging.repository.SolarGridRepository;
+import com.fastned.solarcharging.repository.StateRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,15 +27,18 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Service used for SolarGrid related operations
  */
-@Slf4j(topic = "SolarGridService")
+@Slf4j(topic = "StateService")
 @Service
 @RequiredArgsConstructor
-public class SolarGridService {
+public class StateService {
 
     private final SolarGridRepository solarGridRepository;
+    private final StateRepository stateRepository;
+
     private final NetworkRepository networkRepository;
     private final SolarGridRequestMapper solarGridRequestMapper;
-    private final SolarGridResponseMapper solarGridResponseMapper;
+    private final StateRequestMapper stateRequestMapper;
+    private final StateResponseMapper stateResponseMapper;
 
     /**
      * Fetches a single solar grid by the given id
@@ -37,9 +46,9 @@ public class SolarGridService {
      * @param id
      * @return SolarGridResponse
      */
-    public SolarGridResponse findById(long id) {
-        return solarGridRepository.findById(id)
-                .map(solarGridResponseMapper::toDto)
+    public StateResponse findById(long id) {
+        return stateRepository.findById(id)
+                .map(stateResponseMapper::toDto)
                 .orElseThrow(() -> new NoSuchElementFoundException(Constants.NOT_FOUND_SOLAR_GRID));
     }
 
@@ -61,9 +70,9 @@ public class SolarGridService {
      * @return List of SolarGridResponse
      */
     @Transactional(readOnly = true)
-    public Page<SolarGridResponse> findAll(Pageable pageable) {
-        final Page<SolarGridResponse> solargrids = solarGridRepository.findAll(pageable)
-                .map(solarGridResponseMapper::toDto);
+    public Page<StateResponse> findAll(Pageable pageable) {
+        final Page<StateResponse> solargrids = stateRepository.findAll(pageable)
+                .map(stateResponseMapper::toDto);
 
         if (solargrids.isEmpty())
             throw new NoSuchElementFoundException(Constants.NOT_FOUND_RECORD);
@@ -76,14 +85,14 @@ public class SolarGridService {
      * @param request
      * @return id of the created solar grid
      */
-    public CommandResponse create(SolarGridRequest request) {
-        if (solarGridRepository.existsByNameIgnoreCase(request.getName()))
+    public CommandResponse create(StateRequest request) {
+        if (stateRepository.existsByNameIgnoreCase(request.getName()))
             throw new ElementAlreadyExistsException(Constants.ALREADY_EXISTS_SOLAR_GRID);
 
-        final SolarGrid solarGrid = solarGridRequestMapper.toEntity(request);
-        solarGridRepository.save(solarGrid);
+        final State state = stateRequestMapper.toEntity(request);
+        stateRepository.save(state);
         log.info(Constants.CREATED_SOLAR_GRID);
-        return CommandResponse.builder().id(solarGrid.getId()).build();
+        return CommandResponse.builder().id(state.getId()).build();
     }
 
     /**

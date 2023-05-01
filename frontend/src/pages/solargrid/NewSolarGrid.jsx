@@ -10,31 +10,31 @@ import {
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
+import AuthService from "../../services/AuthService";
 import HttpService from "../../services/HttpService";
 import "./network.scss";
 
-const EditPet = () => {
-  const pageTitle = "Edit Pet";
-  const { state } = useLocation();
+const NewSolarGrid = () => {
+  const pageTitle = "Upload New Solar Grid";
   const defaultValues = {
-    id: state.id,
-    name: state.name,
-    typeId: state.solarGrid.id,
-    userId: state.user.id,
+    name: "",
+    typeId: "",
+    userId: AuthService.getCurrentUser()?.id,
   };
+
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState(defaultValues);
-  const [types, setTypes] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const getTypes = async () => {
-      const response = await HttpService.getWithAuth("/types");
-      const types = await response.data.content;
-      setTypes(types);
+    const getUsers = async () => {
+      const response = await HttpService.getWithAuth("/users");
+      const users = await response.data.content;
+      setUsers(users);
     };
     getTypes();
   }, []);
@@ -49,10 +49,10 @@ const EditPet = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    HttpService.putWithAuth("/pets", formValues)
+    HttpService.postWithAuth("/solargrid", formValues)
       .then((response) => {
-        enqueueSnackbar("Pet updated successfully", { variant: "success" });
-        navigate("/pets");
+        enqueueSnackbar("Solar Grid created successfully", { variant: "success" });
+        navigate("/solargrid");
       })
       .catch((error) => {
         if (error.response?.data?.errors) {
@@ -121,12 +121,12 @@ const EditPet = () => {
               <Button
                 sx={{ minWidth: 112 }}
                 variant="outlined"
-                onClick={() => navigate("/pets")}
+                onClick={() => navigate("/solargrid")}
               >
                 Cancel
               </Button>
               <Button sx={{ minWidth: 112 }} solarGrid="submit" variant="contained">
-                Save
+                Add
               </Button>
             </Stack>
           </form>
@@ -136,4 +136,4 @@ const EditPet = () => {
   );
 };
 
-export default EditPet;
+export default NewPet;

@@ -23,6 +23,14 @@ import java.util.stream.Collectors;
 
 /**
  * Service used for Network related operations
+ *
+ * Each solar grid produces an optimal power output of 20*(1-(D/365*0,005))kW (D=age in days).
+ * Each year has 1550 hours of sun.
+ * Since NL is not a very sunny country, we can (only) expect around 2,5 kWh per m2
+ * To compensate days with a lower sun strength, we simplify our model to 1000 hours of “full sun”
+ * Power output can be calculated over the “full sun” hours with the expectation of optimal power output of solar panels during those “full sun” hours.
+ * Solar grids have to be installed first, so only start to produce energy after 60 days of placement (age 0 is day of placement).
+ * A solar panel breaks down after 25 years of usage.
  */
 @Slf4j(topic = "NetworkService")
 @Service
@@ -36,7 +44,7 @@ public class NetworkService {
     private final NetworkResponseMapper networkResponseMapper;
 
     /**
-     * Fetches a single pet by the given id
+     * Fetches a single network by the given id
      *
      * @param id
      * @return NetworkResponse
@@ -44,98 +52,99 @@ public class NetworkService {
     public NetworkResponse findById(long id) {
         return networkRepository.findById(id)
                 .map(networkResponseMapper::toDto)
-                .orElseThrow(() -> new NoSuchElementFoundException(Constants.NOT_FOUND_PET));
+                .orElseThrow(() -> new NoSuchElementFoundException(Constants.NOT_FOUND_NETWORK));
     }
 
     /**
-     * Fetches all pets based on the given paging and sorting parameters
+     * Fetches all networks based on the given paging and sorting parameters
      *
      * @param pageable
      * @return List of NetworkResponse
      */
     @Transactional(readOnly = true)
     public Page<NetworkResponse> findAll(Pageable pageable) {
-        final Page<NetworkResponse> pets = networkRepository.findAll(pageable)
+        final Page<NetworkResponse> networks = networkRepository.findAll(pageable)
                 .map(networkResponseMapper::toDto);
 
-        if (pets.isEmpty())
+        if (networks.isEmpty())
             throw new NoSuchElementFoundException(Constants.NOT_FOUND_RECORD);
-        return pets;
+        return networks;
     }
 
     /**
-     * Fetches all pets based on the given userId
+     * Fetches all networks based on the given userId
      *
      * @param userId
      * @return List of NetworkResponse
      */
     @Transactional(readOnly = true)
     public List<NetworkResponse> findAllByUserId(long userId) {
-        final List<NetworkResponse> pets = networkRepository.findAllByUserId(userId).stream()
+        final List<NetworkResponse> networks = networkRepository.findAllByIdUser(userId).stream()
                 .map(networkResponseMapper::toDto).toList();
 
-        if (pets.isEmpty())
+        if (networks.isEmpty())
             throw new NoSuchElementFoundException(Constants.NOT_FOUND_RECORD);
-        return pets;
+        return networks;
     }
 
     /**
-     * Fetches counts of all pets by selected type
+     * Fetches counts of all networks by selected type
      *
      * @param types
      * @return selected type names and count of each type
      */
-    @Transactional(readOnly = true)
-    public Map<String, Long> findAllByType(TypeSetRequest types) {
-        return networkRepository.findAll().stream()
-                .filter(pet -> types.getIds().isEmpty() || types.getIds().contains(pet.getType().getId()))
-                .collect(Collectors.groupingBy(x -> x.getType().getName(), Collectors.counting()));
-        // if we need to return SolarGridResponse instead of String (type names), we can use this:
-        // .collect(Collectors.groupingBy(x -> typeResponseMapper.toDto(x.getType()), Collectors.counting()));
-    }
+//    @Transactional(readOnly = true)
+//    public Map<String, Long> findAllByType(TypeSetRequest types) {
+//        return networkRepository.findAll().stream()
+//                .filter(network -> types.getIds().isEmpty() || types.getIds().contains(network.getType().getId()))
+//                .collect(Collectors.groupingBy(x -> x.getType().getName(), Collectors.counting()));
+//        // if we need to return SolarGridResponse instead of String (type names), we can use this:
+//        // .collect(Collectors.groupingBy(x -> typeResponseMapper.toDto(x.getType()), Collectors.counting()));
+//    }
 
     /**
-     * Creates a new pet using the given request parameters
-     *
      * @param request
-     * @return id of the created pet
+     * @return id of the created network
      */
     public CommandResponse create(NetworkRequest request) {
         final Network network = networkRequestMapper.toEntity(request);
-        network.setType(solarGridService.getById(request.getTypeId()));
         network.setUser(userService.getById(request.getIdUser()));
         networkRepository.save(network);
-        log.info(Constants.CREATED_PET);
+        log.info(Constants.CREATED_NETWORK);
         return CommandResponse.builder().id(network.getId()).build();
     }
 
+    public double calculatePowerOutput( int days ) {
+
+        return 20*(1-(days/365*0.005));
+    }
+
     /**
-     * Updates pet using the given request parameters
+     * Updates network using the given request parameters
      *
      * @param request
-     * @return id of the updated pet
+     * @return id of the updated network
      */
     public CommandResponse update(NetworkRequest request) {
         if (!networkRepository.existsById(request.getId()))
-            throw new NoSuchElementFoundException(Constants.NOT_FOUND_PET);
+            throw new NoSuchElementFoundException(Constants.NOT_FOUND_NETWORK);
 
         final Network network = networkRequestMapper.toEntity(request);
-        network.setType(solarGridService.getById(request.getTypeId()));
         network.setUser(userService.getById(request.getIdUser()));
         networkRepository.save(network);
-        log.info(Constants.UPDATED_PET);
+        log.info(Constants.UPDATED_NETWORK);
         return CommandResponse.builder().id(network.getId()).build();
     }
 
     /**
-     * Deletes pet by the given id
+     * Deletes network by the given id
      *
      * @param id
      */
     public void deleteById(long id) {
         final Network network = networkRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementFoundException(Constants.NOT_FOUND_PET));
+                .orElseThrow(() -> new NoSuchElementFoundException(Constants.NOT_FOUND_NETWORK));
         networkRepository.delete(network);
-        log.info(Constants.DELETED_PET);
+        log.info(Constants.DELETED_NETWORK);
     }
 }

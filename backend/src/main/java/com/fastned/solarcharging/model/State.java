@@ -29,7 +29,7 @@ public class State {
     private Integer age;
 
     @Column(nullable = false)
-    private Integer powerOutput;
+    private Double powerOutput;
 
     @Column(nullable = false)
     private Date createdAt;

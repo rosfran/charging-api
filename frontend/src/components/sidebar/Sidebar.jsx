@@ -3,7 +3,6 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import PetsIcon from "@mui/icons-material/Pets";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
@@ -42,12 +41,6 @@ const Sidebar = () => {
                   <span onClick={() => navigate("/users")}>Users</span>
                 </li>
               </Link>
-              <Link to="/statistics" style={{ textDecoration: "none" }}>
-                <li>
-                  <InsertChartIcon className="icon" />
-                  <span>Statistics</span>
-                </li>
-              </Link>
             </div>
           )}
           <p className="title">USER</p>
@@ -57,10 +50,9 @@ const Sidebar = () => {
               <span>Profile</span>
             </li>
           </Link>
-          <Link to="/pets" style={{ textDecoration: "none" }}>
+          <Link to="/api/v1/solar-grid" style={{ textDecoration: "none" }}>
             <li>
-              <PetsIcon className="icon" />
-              <span>My Pets</span>
+              <span>Fast Charging</span>
             </li>
           </Link>
           <Link

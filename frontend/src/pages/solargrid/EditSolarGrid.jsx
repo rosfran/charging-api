@@ -10,21 +10,21 @@ import {
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
-import AuthService from "../../services/AuthService";
 import HttpService from "../../services/HttpService";
 import "./network.scss";
 
-const NewPet = () => {
-  const pageTitle = "Add New Pet";
+const EditPet = () => {
+  const pageTitle = "Edit Solar Grid";
+  const { state } = useLocation();
   const defaultValues = {
-    name: "",
-    typeId: "",
-    userId: AuthService.getCurrentUser()?.id,
+    id: state.id,
+    name: state.name,
+    typeId: state.solarGrid.id,
+    userId: state.user.id,
   };
-
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState(defaultValues);
@@ -49,9 +49,9 @@ const NewPet = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    HttpService.postWithAuth("/pets", formValues)
+    HttpService.putWithAuth("/pets", formValues)
       .then((response) => {
-        enqueueSnackbar("Pet created successfully", { variant: "success" });
+        enqueueSnackbar("Pet updated successfully", { variant: "success" });
         navigate("/pets");
       })
       .catch((error) => {
@@ -126,7 +126,7 @@ const NewPet = () => {
                 Cancel
               </Button>
               <Button sx={{ minWidth: 112 }} solarGrid="submit" variant="contained">
-                Add
+                Save
               </Button>
             </Stack>
           </form>
@@ -136,4 +136,4 @@ const NewPet = () => {
   );
 };
 
-export default NewPet;
+export default EditPet;

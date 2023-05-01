@@ -24,7 +24,7 @@ import static com.fastned.solarcharging.common.Constants.SUCCESS;
 
 @CrossOrigin(origins = "http://localhost:3000/")
 @RestController
-@RequestMapping("/api/v1/pets")
+@RequestMapping("/api/v1/network")
 @RequiredArgsConstructor
 public class NetworkController {
 
@@ -32,7 +32,7 @@ public class NetworkController {
     private final NetworkService networkService;
 
     /**
-     * Fetches a single pet by the given id
+     * Fetches a single solar grid by the given id
      *
      * @param id
      * @return NetworkResponse
@@ -57,18 +57,6 @@ public class NetworkController {
         return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
     }
 
-    /**
-     * Fetches counts of all pets by selected type
-     *
-     * @param request
-     * @return selected types and count of each type
-     */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
-    @PostMapping("/types")
-    public ResponseEntity<ApiResponse<Map<String, Long>>> findAllByType(@Valid @RequestBody TypeSetRequest request) {
-        final Map<String, Long> response = networkService.findAllByType(request);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
-    }
 
     /**
      * Fetches all pets based on the given parameters
@@ -84,10 +72,10 @@ public class NetworkController {
     }
 
     /**
-     * Creates a new pet using the given request parameters
+     * Creates a new solar grid using the given request parameters
      *
      * @param request
-     * @return id of the created pet
+     * @return id of the created solar grid
      */
     @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
     @PostMapping
@@ -99,9 +87,9 @@ public class NetworkController {
     }
 
     /**
-     * Updates pet using the given request parameters
+     * Updates solar grid using the given request parameters
      *
-     * @return id of the updated pet
+     * @return id of the updated solar grid
      */
     @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
     @PutMapping
@@ -111,7 +99,7 @@ public class NetworkController {
     }
 
     /**
-     * Deletes pet by id
+     * Deletes solar grid by id
      *
      * @param id
      */

@@ -16,6 +16,6 @@ public class SolarGridRequest {
     @Size(min = 3, max = 500)
     private String name;
 
-    @Size(min = 3, max = 50)
-    private String description;
+    private Integer idNetwork;
+
 }

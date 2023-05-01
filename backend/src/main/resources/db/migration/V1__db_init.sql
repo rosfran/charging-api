@@ -28,7 +28,7 @@ CREATE TABLE state
 (
     id              BIGINT      NOT NULL,
     age             INT         NOT NULL,
-    power_output    INT         NOT NULL,
+    power_output    REAL         NOT NULL,
     id_solar_grid   BIGINT      NOT NULL,
     created_at      timestamp    NOT NULL,
     is_first_state bool         NOT NULL DEFAULT false,

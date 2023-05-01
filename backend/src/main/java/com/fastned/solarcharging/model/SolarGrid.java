@@ -33,4 +33,7 @@ public class SolarGrid {
     @JoinColumn(name = "id_network", referencedColumnName = "id", nullable = false)
     private Network network;
 
+    @OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
+    private Set<State> states = new HashSet<>();
+
 }
