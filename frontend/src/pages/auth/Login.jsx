@@ -116,14 +116,14 @@ const Login = () => {
                 fullWidth
                 label="Password"
                 name="password"
-                solarGrid="password"
+                type="password"
                 id="password"
                 autoComplete="current-password"
                 value={formValues.password}
                 onChange={handleInputChange}
               />
               <Button
-                solarGrid="submit"
+                type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}

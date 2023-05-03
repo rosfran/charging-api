@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import "./auth.scss";
 
 const Unauthorized = () => {
-  const pageTitle = "Anauthorized";
+  const pageTitle = "Unauthorized";
 
   return (
     <div className="single">

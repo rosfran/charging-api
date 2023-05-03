@@ -10,8 +10,6 @@ import java.util.List;
 @Repository
 public interface StateRepository extends JpaRepository<State, Long> {
 
-    boolean existsByNameIgnoreCase(String name);
-
-    List<State> findAllByIdSolarGrid(long idSolarGrid);
+    List<State> findAllBySolarGridId(long idSolarGrid);
 
 }

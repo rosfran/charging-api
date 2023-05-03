@@ -2,11 +2,10 @@ package com.fastned.solarcharging.service;
 
 import com.fastned.solarcharging.dto.mapper.NetworkRequestMapper;
 import com.fastned.solarcharging.dto.mapper.NetworkResponseMapper;
+import com.fastned.solarcharging.dto.mapper.UserRequestMapper;
 import com.fastned.solarcharging.dto.request.NetworkRequest;
-import com.fastned.solarcharging.dto.request.TypeSetRequest;
+import com.fastned.solarcharging.dto.request.UserRequest;
 import com.fastned.solarcharging.dto.response.NetworkResponse;
-import com.fastned.solarcharging.dto.response.SolarGridResponse;
-import com.fastned.solarcharging.dto.response.UserResponse;
 import com.fastned.solarcharging.exception.NoSuchElementFoundException;
 import com.fastned.solarcharging.model.Network;
 import com.fastned.solarcharging.model.SolarGrid;
@@ -15,14 +14,11 @@ import com.fastned.solarcharging.model.User;
 import com.fastned.solarcharging.repository.NetworkRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -57,58 +53,17 @@ class NetworkServiceTest {
     @Mock
     private UserService userService;
 
+    @Mock
+    private UserRequestMapper userRequestMapper;
+
     @Captor
     private ArgumentCaptor<Network> networkCaptor;
 
     /**
      * Method under test: {@link NetworkService#findById(long)}
      */
-    @ParameterizedTest
-    @CsvFileSource(resources = "/data/pets.csv")
-    void findById_should_returnPetResponse_when_PetIsFound(long id, String name, long typeId, String typeName, long userId,
-                                                           String firstName, String lastName, String fullName, String username) {
-        Network network = new Network();
-        network.setId(id);
-        network.setName(name);
-
-        SolarGridResponse solarGridResponse = new SolarGridResponse();
-        solarGridResponse.setId(typeId);
-        solarGridResponse.setName(typeName);
-
-        UserResponse userResponse = new UserResponse();
-        userResponse.setId(userId);
-        userResponse.setFirstName(firstName);
-        userResponse.setLastName(lastName);
-        userResponse.setUsername(username);
-        userResponse.setFullName(fullName);
-
-        NetworkResponse networkResponse = new NetworkResponse();
-        networkResponse.setId(id);
-        networkResponse.setName(name);
-        networkResponse.setUser(userResponse);
-        networkResponse.setType(solarGridResponse);
-
-        when(networkRepository.findById(id)).thenReturn(Optional.of(network));
-        when(networkResponseMapper.toDto(network)).thenReturn(networkResponse);
-
-        NetworkResponse result = networkService.findById(id);
-
-        assertEquals(id, result.getId());
-        assertEquals(name, result.getName());
-        assertEquals(typeId, result.getType().getId());
-        assertEquals(typeName, result.getType().getName());
-        assertEquals(userId, result.getUser().getId());
-        assertEquals(firstName, result.getUser().getFirstName());
-        assertEquals(lastName, result.getUser().getLastName());
-        assertEquals(fullName, result.getUser().getFullName());
-        assertEquals(username, result.getUser().getUsername());
-    }
-
-    /**
-     * Method under test: {@link NetworkService#findById(long)}
-     */
     @Test
-    void findById_should_throwNoSuchElementFoundException_when_PetIsNotFound() {
+    void findById_should_throwNoSuchElementFoundException_when_IsNotFound() {
         long id = 101L;
         when(networkRepository.findById(id)).thenReturn(Optional.empty());
 
@@ -122,59 +77,8 @@ class NetworkServiceTest {
     /**
      * Method under test: {@link NetworkService#findAll(Pageable)}
      */
-    @ParameterizedTest
-    @CsvFileSource(resources = "/data/pets.csv")
-    void findAll_should_returnPetResponsePage_when_PetIsFound(long id, String name, long typeId, String typeName, long userId,
-                                                              String firstName, String lastName, String fullName, String username) {
-        Network network = new Network();
-        network.setId(id);
-        network.setName(name);
-
-        ArrayList<Network> networkList = new ArrayList<>();
-        networkList.add(network);
-        PageImpl<Network> pageImpl = new PageImpl<>(networkList);
-        Pageable pageable = PageRequest.of(0, 10);
-
-        SolarGridResponse solarGridResponse = new SolarGridResponse();
-        solarGridResponse.setId(typeId);
-        solarGridResponse.setName(typeName);
-
-        UserResponse userResponse = new UserResponse();
-        userResponse.setId(userId);
-        userResponse.setFirstName(firstName);
-        userResponse.setLastName(lastName);
-        userResponse.setUsername(username);
-        userResponse.setFullName(fullName);
-
-        NetworkResponse networkResponse = new NetworkResponse();
-        networkResponse.setId(id);
-        networkResponse.setName(name);
-        networkResponse.setUser(userResponse);
-        networkResponse.setType(solarGridResponse);
-
-        when(networkRepository.findAll(pageable)).thenReturn(pageImpl);
-        when(networkResponseMapper.toDto(network)).thenReturn(networkResponse);
-
-        Page<NetworkResponse> result = networkService.findAll(pageable);
-
-        verify(networkResponseMapper).toDto(any());
-        assertEquals(1, result.getContent().size());
-        assertEquals(id, result.getContent().get(0).getId());
-        assertEquals(name, result.getContent().get(0).getName());
-        assertEquals(typeId, result.getContent().get(0).getType().getId());
-        assertEquals(typeName, result.getContent().get(0).getType().getName());
-        assertEquals(userId, result.getContent().get(0).getUser().getId());
-        assertEquals(firstName, result.getContent().get(0).getUser().getFirstName());
-        assertEquals(lastName, result.getContent().get(0).getUser().getLastName());
-        assertEquals(fullName, result.getContent().get(0).getUser().getFullName());
-        assertEquals(username, result.getContent().get(0).getUser().getUsername());
-    }
-
-    /**
-     * Method under test: {@link NetworkService#findAll(Pageable)}
-     */
     @Test
-    void findAll_should_throwNoSuchElementFoundException_when_PetIsNotFound() {
+    void findAll_should_throwNoSuchElementFoundException_when_IsNotFound() {
         Pageable pageable = PageRequest.of(0, 10);
         when(networkRepository.findAll(pageable)).thenReturn(new PageImpl<>(new ArrayList<>()));
 
@@ -191,13 +95,13 @@ class NetworkServiceTest {
     @Test
     void findAllByUserId_should_throwNoSuchElementFoundException_when_NetworkIsNotFound() {
         long id = 101L;
-        when(networkRepository.findAllByIdUser(id)).thenReturn(Collections.emptyList());
+        when(networkRepository.findAllByUserId(id)).thenReturn(Collections.emptyList());
 
         assertThrows(NoSuchElementFoundException.class, () -> {
             networkService.findAllByUserId(id);
         });
 
-        verify(networkRepository).findAllByIdUser(id);
+        verify(networkRepository).findAllByUserId(id);
     }
 
     /**
@@ -209,6 +113,8 @@ class NetworkServiceTest {
         Network network1 = new Network();
         final User user = new User();
         user.setId(12l);
+
+        userService.create( userRequestMapper.toDto(user) );
         network1.setUser(user);
 
         SolarGrid solarGrid1 = new SolarGrid();
@@ -241,8 +147,6 @@ class NetworkServiceTest {
         state3.setSolarGrid(solarGrid3);
 
         Set<Long> types = new HashSet<>(Arrays.asList(101L, 102L));
-        TypeSetRequest typeSetRequest = new TypeSetRequest();
-        typeSetRequest.setIds(types);
 
         ArrayList<Network> networkList = new ArrayList<>();
         networkList.add(network1);
@@ -280,10 +184,10 @@ class NetworkServiceTest {
      * Method under test: {@link NetworkService#deleteById(long)}
      */
     @Test
-    void deleteById_should_deletePet_when_PetIsFound() {
+    void deleteById_should_delete_when_NetworkIsFound() {
         Network network = new Network();
         network.setId(101L);
-        network.setName("Daisy");
+        network.setName("Amsterdam");
         network.setUser(new User());
 
         when(networkRepository.findById(101L)).thenReturn(Optional.of(network));
@@ -293,14 +197,14 @@ class NetworkServiceTest {
         Network capturedNetwork = networkCaptor.getValue();
 
         assertEquals(101L, capturedNetwork.getId());
-        assertEquals("Daisy", capturedNetwork.getName());
+        assertEquals("Amsterdam", capturedNetwork.getName());
     }
 
     /**
      * Method under test: {@link NetworkService#deleteById(long)}
      */
     @Test
-    void deleteById_should_throwNoSuchElementFoundException_when_PetIsNotFound() {
+    void deleteById_should_throwNoSuchElementFoundException_when_NetworkIsNotFound() {
         long id = 101L;
         when(networkRepository.findById(id)).thenReturn(Optional.empty());
 

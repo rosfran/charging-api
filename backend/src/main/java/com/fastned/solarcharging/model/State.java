@@ -38,7 +38,7 @@ public class State {
     private Boolean isFirstState;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_solar_grid", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "solar_grid_id", referencedColumnName = "id", nullable = false)
     private SolarGrid solarGrid;
 
 }

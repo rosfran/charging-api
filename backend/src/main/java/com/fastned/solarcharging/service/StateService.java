@@ -86,9 +86,6 @@ public class StateService {
      * @return id of the created solar grid
      */
     public CommandResponse create(StateRequest request) {
-        if (stateRepository.existsByNameIgnoreCase(request.getName()))
-            throw new ElementAlreadyExistsException(Constants.ALREADY_EXISTS_SOLAR_GRID);
-
         final State state = stateRequestMapper.toEntity(request);
         stateRepository.save(state);
         log.info(Constants.CREATED_SOLAR_GRID);
@@ -101,17 +98,13 @@ public class StateService {
      * @param request
      * @return id of the updated solar grid
      */
-    public CommandResponse update(SolarGridRequest request) {
-        final SolarGrid solarGrid = solarGridRepository.findById(request.getId())
+    public CommandResponse update(StateRequest request) {
+        final State state = stateRepository.findById(request.getId())
                 .orElseThrow(() -> new NoSuchElementFoundException(Constants.NOT_FOUND_SOLAR_GRID));
 
-        // if the name value of the request is different, check if a record with this name already exists
-        if (!request.getName().equalsIgnoreCase(solarGrid.getName()) && solarGridRepository.existsByNameIgnoreCase(request.getName()))
-            throw new ElementAlreadyExistsException(Constants.ALREADY_EXISTS_SOLAR_GRID);
-
-        solarGridRepository.save(solarGridRequestMapper.toEntity(request));
+        stateRepository.save(stateRequestMapper.toEntity(request));
         log.info(Constants.UPDATED_SOLAR_GRID);
-        return CommandResponse.builder().id(solarGrid.getId()).build();
+        return CommandResponse.builder().id(state.getId()).build();
     }
 
     /**

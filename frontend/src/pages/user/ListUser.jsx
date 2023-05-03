@@ -90,21 +90,21 @@ export default ListUser;
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = useState(false);
-  const [pets, setPets] = useState([]);
+  const [networks, setNetworks] = useState([]);
   const [id, setId] = useState();
   const navigate = useNavigate();
-  const pageTitle = "Pets of the User";
+  const pageTitle = "Networks of the User";
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (open) {
-      HttpService.getWithAuth("/pets/users/" + id)
+      HttpService.getWithAuth("/network/users/" + id)
         .then((response) => {
-          setPets(response.data);
+          setNetworks(response.data);
         })
         .catch((error) => {
           if (error.response.status === 404) {
-            setPets([]);
+            setNetworks([]);
           } else if (error.response?.data?.errors) {
             error.response?.data?.errors.map((e) =>
               enqueueSnackbar(e.field + " " + e.message, { variant: "error" })
@@ -174,7 +174,7 @@ function Row(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {pets.map((network) => (
+                  {networks.map((network) => (
                     <TableRow key={network.id}>
                       <TableCell component="th" scope="row">
                         {network.name}

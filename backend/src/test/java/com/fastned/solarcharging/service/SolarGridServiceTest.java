@@ -81,7 +81,7 @@ class SolarGridServiceTest {
      * Method under test: {@link SolarGridService#findAll(Pageable)}
      */
     @Test
-    void findAll_should_throwNoSuchElementFoundException_when_TypeIsNotFound() {
+    void findAll_should_throwNoSuchElementFoundException_when_IsNotFound() {
         Pageable pageable = PageRequest.of(0, 10);
         when(solarGridRepository.findAll(pageable)).thenReturn(new PageImpl<>(new ArrayList<>()));
 
@@ -138,7 +138,7 @@ class SolarGridServiceTest {
      * Method under test: {@link SolarGridService#deleteById(long)}
      */
     @Test
-    void deleteById_should_deleteType_when_TypeIsFound() {
+    void deleteById_should_deleteType_when_IsFound() {
         SolarGrid solarGrid = new SolarGrid();
         solarGrid.setId(101L);
         solarGrid.setName("Maastricht");

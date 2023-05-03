@@ -12,7 +12,7 @@ import static com.fastned.solarcharging.common.Constants.DATE_FORMAT;
 import static com.fastned.solarcharging.common.Constants.DATE_TIME_FORMAT;
 
 /**
- * Configuration file used to configure settings of the application
+ * This implements a Configuration file to configure APP settings
  */
 @Configuration
 public class AppConfig {

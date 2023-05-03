@@ -12,7 +12,7 @@ CREATE TABLE solar_grid
 (
     id              BIGINT      NOT NULL,
     name            VARCHAR(500) NOT NULL,
-    id_network      BIGINT      NOT NULL,
+    network_id      BIGINT      NOT NULL,
     CONSTRAINT pk_solar_grid PRIMARY KEY (id)
 );
 
@@ -20,7 +20,7 @@ CREATE TABLE network
 (
     id              BIGINT      NOT NULL,
     name            VARCHAR(50),
-    id_user         BIGINT      NOT NULL,
+    user_id         BIGINT      NOT NULL,
     CONSTRAINT pk_network PRIMARY KEY (id)
 );
 
@@ -29,7 +29,7 @@ CREATE TABLE state
     id              BIGINT      NOT NULL,
     age             INT         NOT NULL,
     power_output    REAL         NOT NULL,
-    id_solar_grid   BIGINT      NOT NULL,
+    solar_grid_id   BIGINT      NOT NULL,
     created_at      timestamp    NOT NULL,
     is_first_state bool         NOT NULL DEFAULT false,
     CONSTRAINT pk_state PRIMARY KEY (id)
@@ -38,16 +38,8 @@ CREATE TABLE state
 CREATE TABLE role
 (
     id   BIGINT      NOT NULL,
-    solarGrid VARCHAR(20) NOT NULL,
+    type VARCHAR(20) NOT NULL,
     CONSTRAINT pk_role PRIMARY KEY (id)
-);
-
-CREATE TABLE solarGrid
-(
-    id          BIGINT      NOT NULL,
-    name        VARCHAR(50) NOT NULL,
-    description VARCHAR(50),
-    CONSTRAINT pk_type PRIMARY KEY (id)
 );
 
 CREATE TABLE public."user"
@@ -62,28 +54,26 @@ CREATE TABLE public."user"
 
 CREATE TABLE public.user_role
 (
-    id_role BIGINT NOT NULL,
-    id_user BIGINT NOT NULL,
-    CONSTRAINT pk_user_role PRIMARY KEY (id_role, id_user)
+    role_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    CONSTRAINT pk_user_role PRIMARY KEY (role_id, user_id)
 );
 
 ALTER TABLE role
-    ADD CONSTRAINT uc_role_type UNIQUE (solarGrid);
+    ADD CONSTRAINT uc_role_type UNIQUE (type);
 
-ALTER TABLE solarGrid
-    ADD CONSTRAINT uc_type_name UNIQUE (name);
 
 ALTER TABLE public."user"
     ADD CONSTRAINT uc_user_username UNIQUE (username);
 
 ALTER TABLE solar_grid
-    ADD CONSTRAINT FK_TO_NETWORK_FROM_SOLAR_GRID FOREIGN KEY (id_network) REFERENCES solarGrid (id);
+    ADD CONSTRAINT FK_TO_NETWORK_FROM_SOLAR_GRID FOREIGN KEY (network_id) REFERENCES network (id);
 
 ALTER TABLE network
-    ADD CONSTRAINT FK_TO_USER_FROM_NETWORK FOREIGN KEY (id_user) REFERENCES "user" (id);
+    ADD CONSTRAINT FK_TO_USER_FROM_NETWORK FOREIGN KEY (user_id) REFERENCES "user" (id);
 
 ALTER TABLE public.user_role
-    ADD CONSTRAINT FK_TO_ROLE_FROM_USER_ROLE FOREIGN KEY (id_role) REFERENCES role (id);
+    ADD CONSTRAINT FK_TO_ROLE_FROM_USER_ROLE FOREIGN KEY (role_id) REFERENCES role (id);
 
 ALTER TABLE public.user_role
-    ADD CONSTRAINT FK_TO_USER_FROM_USER_ROLE FOREIGN KEY (id_user) REFERENCES "user" (id);
+    ADD CONSTRAINT FK_TO_USER_FROM_USER_ROLE FOREIGN KEY (user_id) REFERENCES "user" (id);

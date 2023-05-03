@@ -113,6 +113,19 @@ public class SolarGridController {
     }
 
     /**
+     * Fetches a single SolarGrid by the given User id
+     *
+     * @param id
+     * @return SolarGridResponse
+     */
+    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @GetMapping("/user/{id}")
+    public ResponseEntity<ApiResponse<Page<SolarGridResponse>>> findByUserId(@PathVariable long id) {
+        final Page<SolarGridResponse> response = solarGridService.findByUserId(id);
+        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+    }
+
+    /**
      * Fetches all SolarGrids based on the given parameters
      *
      * @param pageable

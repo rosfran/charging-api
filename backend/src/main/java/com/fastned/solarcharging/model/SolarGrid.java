@@ -30,10 +30,10 @@ public class SolarGrid {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_network", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "network_id", referencedColumnName = "id", nullable = false)
     private Network network;
 
-    @OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "solarGrid", cascade = CascadeType.ALL)
     private Set<State> states = new HashSet<>();
 
 }

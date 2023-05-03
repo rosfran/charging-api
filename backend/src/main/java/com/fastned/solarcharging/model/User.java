@@ -42,12 +42,12 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Network> networks = new HashSet<>();
 
-    public void addPet(Network network) {
+    public void addNetwork(Network network) {
         networks.add(network);
         network.setUser(this);
     }
 
-    public void removePet(Network network) {
+    public void removeNetwork(Network network) {
         networks.remove(network);
         network.setUser(null);
     }

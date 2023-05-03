@@ -32,7 +32,7 @@ import static com.fastned.solarcharging.common.Constants.SUCCESS;
 
 @CrossOrigin(origins = "http://localhost:3000/")
 @RestController
-@RequestMapping("/api/v1/solar-grid")
+@RequestMapping("/api/v1/state")
 @RequiredArgsConstructor
 public class StateController {
 
@@ -60,8 +60,8 @@ public class StateController {
      */
     @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
     @GetMapping
-    public ResponseEntity<ApiResponse<Page<SolarGridResponse>>> findAll(Pageable pageable) {
-        final Page<SolarGridResponse> response = stateService.findAll(pageable);
+    public ResponseEntity<ApiResponse<Page<StateResponse>>> findAll(Pageable pageable) {
+        final Page<StateResponse> response = stateService.findAll(pageable);
         return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
     }
 
@@ -73,7 +73,7 @@ public class StateController {
      */
     @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
     @PostMapping
-    public ResponseEntity<ApiResponse<CommandResponse>> create(@Valid @RequestBody SolarGridRequest request) {
+    public ResponseEntity<ApiResponse<CommandResponse>> create(@Valid @RequestBody StateRequest request) {
         final CommandResponse response = stateService.create(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -81,19 +81,19 @@ public class StateController {
     }
 
     /**
-     * Updates a given SolarGrid using the given request parameters
+     * Updates a given State using the given request parameters
      *
      * @return id of the updated type
      */
     @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
     @PutMapping
-    public ResponseEntity<ApiResponse<CommandResponse>> update(@Valid @RequestBody SolarGridRequest request) {
+    public ResponseEntity<ApiResponse<CommandResponse>> update(@Valid @RequestBody StateRequest request) {
         final CommandResponse response = stateService.update(request);
         return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
     }
 
     /**
-     * Deletes SolarGrid by id
+     * Deletes State by id
      *
      * @param id
      */

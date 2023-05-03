@@ -1,7 +1,6 @@
 package com.fastned.solarcharging.controller;
 
 import com.fastned.solarcharging.dto.request.NetworkRequest;
-import com.fastned.solarcharging.dto.request.TypeSetRequest;
 import com.fastned.solarcharging.dto.response.ApiResponse;
 import com.fastned.solarcharging.dto.response.CommandResponse;
 import com.fastned.solarcharging.dto.response.NetworkResponse;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Clock;
 import java.time.Instant;
 import java.util.List;
-import java.util.Map;
 
 import static com.fastned.solarcharging.common.Constants.SUCCESS;
 
@@ -45,7 +43,7 @@ public class NetworkController {
     }
 
     /**
-     * Fetches all pets based on the given userId
+     * Fetches all Solar Grid based on the given userId
      *
      * @param userId
      * @return List of NetworkResponse
@@ -59,7 +57,7 @@ public class NetworkController {
 
 
     /**
-     * Fetches all pets based on the given parameters
+     * Fetches all Solar Grids based on the given parameters
      *
      * @param pageable
      * @return List of NetworkResponse

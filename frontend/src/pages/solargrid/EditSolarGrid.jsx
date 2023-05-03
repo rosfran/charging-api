@@ -14,9 +14,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import HttpService from "../../services/HttpService";
-import "./network.scss";
+import "./solargrid.scss";
 
-const EditPet = () => {
+const EditSolarGrid = () => {
   const pageTitle = "Edit Solar Grid";
   const { state } = useLocation();
   const defaultValues = {
@@ -28,15 +28,15 @@ const EditPet = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState(defaultValues);
-  const [types, setTypes] = useState([]);
+  const [solarGrids, setSolarGrids] = useState([]);
 
   useEffect(() => {
-    const getTypes = async () => {
-      const response = await HttpService.getWithAuth("/types");
-      const types = await response.data.content;
-      setTypes(types);
+    const getSolarGrids = async () => {
+      const response = await HttpService.getWithAuth("/api/v1/solar-grid/user/");
+      const solarGrids = await response.data.content;
+      setSolarGrids(solarGrids);
     };
-    getTypes();
+    getSolarGrids();
   }, []);
 
   const handleInputChange = (e) => {
@@ -49,10 +49,10 @@ const EditPet = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    HttpService.putWithAuth("/pets", formValues)
+    HttpService.putWithAuth("/api/v1/solar-grid", formValues)
       .then((response) => {
-        enqueueSnackbar("Pet updated successfully", { variant: "success" });
-        navigate("/pets");
+        enqueueSnackbar("Solar-grid updated successfully", { variant: "success" });
+        navigate("/solargrid");
       })
       .catch((error) => {
         if (error.response?.data?.errors) {
@@ -108,7 +108,7 @@ const EditPet = () => {
                     <MenuItem value="">
                       <em>------------ none ------------</em>
                     </MenuItem>
-                    {types.map((solarGrid) => (
+                    {solarGrids.map((solarGrid) => (
                       <MenuItem key={solarGrid.id} value={solarGrid.id}>
                         {solarGrid.name}
                       </MenuItem>
@@ -121,7 +121,7 @@ const EditPet = () => {
               <Button
                 sx={{ minWidth: 112 }}
                 variant="outlined"
-                onClick={() => navigate("/pets")}
+                onClick={() => navigate("/solargrid")}
               >
                 Cancel
               </Button>
@@ -136,4 +136,4 @@ const EditPet = () => {
   );
 };
 
-export default EditPet;
+export default EditSolarGrid;

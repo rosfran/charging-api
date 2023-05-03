@@ -11,5 +11,5 @@ public interface NetworkRepository extends JpaRepository<Network, Long> {
 
     boolean existsById(Long id);
 
-    List<Network> findAllByIdUser(long idUser);
+    List<Network> findAllByUserId(long idUser);
 }

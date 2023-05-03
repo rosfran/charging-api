@@ -15,7 +15,7 @@ import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import AuthService from "../../services/AuthService";
 import HttpService from "../../services/HttpService";
-import "./network.scss";
+import "./solargrid.scss";
 
 const NewSolarGrid = () => {
   const pageTitle = "Upload New Solar Grid";
@@ -28,15 +28,15 @@ const NewSolarGrid = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState(defaultValues);
-  const [users, setUsers] = useState([]);
+  const [solarGrids, setSolarGrids] = useState([]);
 
   useEffect(() => {
-    const getUsers = async () => {
+    const getSolarGrids = async () => {
       const response = await HttpService.getWithAuth("/users");
-      const users = await response.data.content;
-      setUsers(users);
+      const solarGrids = await response.data.content;
+      setSolarGrids(solarGrids);
     };
-    getTypes();
+    getSolarGrids();
   }, []);
 
   const handleInputChange = (e) => {
@@ -108,7 +108,7 @@ const NewSolarGrid = () => {
                     <MenuItem value="">
                       <em>------------ none ------------</em>
                     </MenuItem>
-                    {types.map((solarGrid) => (
+                    {solarGrids.map((solarGrid) => (
                       <MenuItem key={solarGrid.id} value={solarGrid.id}>
                         {solarGrid.name}
                       </MenuItem>
@@ -136,4 +136,4 @@ const NewSolarGrid = () => {
   );
 };
 
-export default NewPet;
+export default NewSolarGrid;

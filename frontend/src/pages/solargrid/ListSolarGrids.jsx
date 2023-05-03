@@ -16,7 +16,7 @@ import AuthService from "../../services/AuthService";
 import HttpService from "../../services/HttpService";
 import { solarGridColumns } from "./fields";
 
-const ListPet = () => {
+const ListSolarGrid = () => {
   const pageTitle = "Solar Grids";
   const navigate = useNavigate();
   const [id, setId] = useState();
@@ -30,7 +30,7 @@ const ListPet = () => {
 
   const fetchData = () => {
     const userId = AuthService.getCurrentUser()?.id;
-    HttpService.getWithAuth("/api/v1/solar-grid" + userId)
+    HttpService.getWithAuth("/api/v1/solar-grid/user/" + userId)
       .then((response) => {
         setData(response.data);
       })
@@ -145,4 +145,4 @@ const ListPet = () => {
   );
 };
 
-export default ListPet;
+export default ListSolarGrid;

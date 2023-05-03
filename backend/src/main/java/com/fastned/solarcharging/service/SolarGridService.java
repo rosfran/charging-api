@@ -5,6 +5,7 @@ import com.fastned.solarcharging.dto.request.SolarGridRequest;
 import com.fastned.solarcharging.dto.response.SolarGridResponse;
 import com.fastned.solarcharging.exception.ElementAlreadyExistsException;
 import com.fastned.solarcharging.exception.NoSuchElementFoundException;
+import com.fastned.solarcharging.model.Network;
 import com.fastned.solarcharging.repository.SolarGridRepository;
 import com.fastned.solarcharging.repository.NetworkRepository;
 import com.fastned.solarcharging.dto.mapper.SolarGridRequestMapper;
@@ -14,9 +15,12 @@ import com.fastned.solarcharging.model.SolarGrid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Service used for SolarGrid related operations
@@ -41,6 +45,22 @@ public class SolarGridService {
         return solarGridRepository.findById(id)
                 .map(solarGridResponseMapper::toDto)
                 .orElseThrow(() -> new NoSuchElementFoundException(Constants.NOT_FOUND_SOLAR_GRID));
+    }
+
+    /**
+     * Fetches a single solar grid by the given id
+     *
+     * @param id
+     * @return SolarGridResponse
+     */
+    public Page<SolarGridResponse> findByUserId(long id) {
+        List<Network> lstNetworks = networkRepository.findAllByUserId(id);
+
+        if ( lstNetworks.size() == 0 ) {
+            throw new  NoSuchElementFoundException(Constants.NOT_FOUND_NETWORK);
+        }
+        return solarGridRepository.findAllByNetworkId(lstNetworks.get(0).getId(), PageRequest.ofSize(30))
+                .map(solarGridResponseMapper::toDto);
     }
 
     /**
