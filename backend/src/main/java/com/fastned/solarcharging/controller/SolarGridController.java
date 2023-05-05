@@ -41,7 +41,7 @@ public class SolarGridController {
     private final StateService stateService;
 
 
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    //@PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @PostMapping("/receive-file")
     public ResponseEntity<ApiResponse<SolarGridCreateResponse>>  handleSolarGridStateFileUpload(@RequestParam("file") MultipartFile file,
                                                  Authentication auth,
@@ -77,7 +77,7 @@ public class SolarGridController {
                         solRequest.setName((String) entry.getValue());
                     } else if ( entry.getKey().equalsIgnoreCase("age")) {
                         int value = -1;
-                        value = Integer.parseInt((String) entry.getValue());
+                        value = (Integer)entry.getValue();
                         req.setAge(value);
                     }
 
@@ -105,7 +105,7 @@ public class SolarGridController {
      * @param id
      * @return SolarGridResponse
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<SolarGridResponse>> findById(@PathVariable long id) {
         final SolarGridResponse response = solarGridService.findById(id);
@@ -118,7 +118,7 @@ public class SolarGridController {
      * @param id
      * @return SolarGridResponse
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @GetMapping("/user/{id}")
     public ResponseEntity<ApiResponse<Page<SolarGridResponse>>> findByUserId(@PathVariable long id) {
         final Page<SolarGridResponse> response = solarGridService.findByUserId(id);
@@ -131,7 +131,7 @@ public class SolarGridController {
      * @param pageable
      * @return List of SolarGridResponse
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @GetMapping
     public ResponseEntity<ApiResponse<Page<SolarGridResponse>>> findAll(Pageable pageable) {
         final Page<SolarGridResponse> response = solarGridService.findAll(pageable);
@@ -144,7 +144,7 @@ public class SolarGridController {
      * @param request
      * @return id of the created type
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @PostMapping
     public ResponseEntity<ApiResponse<CommandResponse>> create(@Valid @RequestBody SolarGridRequest request) {
         final CommandResponse response = solarGridService.create(request);
@@ -158,7 +158,7 @@ public class SolarGridController {
      *
      * @return id of the updated type
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @PutMapping
     public ResponseEntity<ApiResponse<CommandResponse>> update(@Valid @RequestBody SolarGridRequest request) {
         final CommandResponse response = solarGridService.update(request);
@@ -170,7 +170,7 @@ public class SolarGridController {
      *
      * @param id
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteById(@PathVariable long id) {
         solarGridService.deleteById(id);

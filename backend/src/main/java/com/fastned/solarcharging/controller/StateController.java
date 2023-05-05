@@ -45,7 +45,7 @@ public class StateController {
      * @param id
      * @return StateResponse
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<StateResponse>> findById(@PathVariable long id) {
         final StateResponse response = stateService.findById(id);
@@ -58,7 +58,7 @@ public class StateController {
      * @param pageable
      * @return List of SolarGridResponse
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @GetMapping
     public ResponseEntity<ApiResponse<Page<StateResponse>>> findAll(Pageable pageable) {
         final Page<StateResponse> response = stateService.findAll(pageable);
@@ -71,7 +71,7 @@ public class StateController {
      * @param request
      * @return id of the created type
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @PostMapping
     public ResponseEntity<ApiResponse<CommandResponse>> create(@Valid @RequestBody StateRequest request) {
         final CommandResponse response = stateService.create(request);
@@ -85,7 +85,7 @@ public class StateController {
      *
      * @return id of the updated type
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @PutMapping
     public ResponseEntity<ApiResponse<CommandResponse>> update(@Valid @RequestBody StateRequest request) {
         final CommandResponse response = stateService.update(request);
@@ -97,7 +97,7 @@ public class StateController {
      *
      * @param id
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteById(@PathVariable long id) {
         stateService.deleteById(id);

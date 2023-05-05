@@ -50,7 +50,7 @@ const Sidebar = () => {
               <span>Profile</span>
             </li>
           </Link>
-          <Link to="/api/v1/solar-grid" style={{ textDecoration: "none" }}>
+          <Link to="/solargrid" style={{ textDecoration: "none" }}>
             <li>
               <span>Fast Charging</span>
             </li>
@@ -70,11 +70,11 @@ const Sidebar = () => {
       <div className="bottom">
         <div
           className="colorOption"
-          onClick={() => dispatch({ solarGrid: "LIGHT" })}
+          onClick={() => dispatch({ type: "LIGHT" })}
         ></div>
         <div
           className="colorOption"
-          onClick={() => dispatch({ solarGrid: "DARK" })}
+          onClick={() => dispatch({ type: "DARK" })}
         ></div>
       </div>
     </div>

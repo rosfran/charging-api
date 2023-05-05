@@ -35,7 +35,7 @@ public class NetworkController {
      * @param id
      * @return NetworkResponse
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<NetworkResponse>> findById(@PathVariable long id) {
         final NetworkResponse response = networkService.findById(id);
@@ -48,7 +48,7 @@ public class NetworkController {
      * @param userId
      * @return List of NetworkResponse
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @GetMapping("/users/{userId}")
     public ResponseEntity<ApiResponse<List<NetworkResponse>>> findAllByUserId(@PathVariable long userId) {
         final List<NetworkResponse> response = networkService.findAllByUserId(userId);
@@ -62,7 +62,7 @@ public class NetworkController {
      * @param pageable
      * @return List of NetworkResponse
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @GetMapping
     public ResponseEntity<ApiResponse<Page<NetworkResponse>>> findAll(Pageable pageable) {
         final Page<NetworkResponse> response = networkService.findAll(pageable);
@@ -75,7 +75,7 @@ public class NetworkController {
      * @param request
      * @return id of the created solar grid
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @PostMapping
     public ResponseEntity<ApiResponse<CommandResponse>> create(@Valid @RequestBody NetworkRequest request) {
         final CommandResponse response = networkService.create(request);
@@ -89,7 +89,7 @@ public class NetworkController {
      *
      * @return id of the updated solar grid
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @PutMapping
     public ResponseEntity<ApiResponse<CommandResponse>> update(@Valid @RequestBody NetworkRequest request) {
         final CommandResponse response = networkService.update(request);
@@ -101,7 +101,7 @@ public class NetworkController {
      *
      * @param id
      */
-    @PreAuthorize("hasRole(T(com.fastned.fastcharging.model.RoleType).ROLE_USER)")
+    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteById(@PathVariable long id) {
         networkService.deleteById(id);

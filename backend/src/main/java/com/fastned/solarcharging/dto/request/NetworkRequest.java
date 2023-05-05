@@ -16,8 +16,7 @@ public class NetworkRequest {
     @NotBlank
     @Size(min = 3, max = 50)
     private String name;
-
-
+    
     @NotNull()
     private Long idUser;
 }

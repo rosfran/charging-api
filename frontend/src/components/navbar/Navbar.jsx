@@ -15,14 +15,14 @@ const Navbar = () => {
       <div className="navbar">
         <div className="wrapper">
           <div className="search">
-            <input solarGrid="text" placeholder="Search..." />
+            <input type="text" placeholder="Search..." />
             <SearchOutlinedIcon />
           </div>
           <div className="items">
             <div className="item">
               <DarkModeOutlinedIcon
                 className="icon"
-                onClick={() => dispatch({ solarGrid: "TOGGLE" })}
+                onClick={() => dispatch({ type: "TOGGLE" })}
               />
             </div>
             <div className="item">
