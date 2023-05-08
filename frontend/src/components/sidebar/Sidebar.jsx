@@ -52,7 +52,7 @@ const Sidebar = () => {
           </Link>
           <Link to="/solargrid" style={{ textDecoration: "none" }}>
             <li>
-              <span>Fast Charging</span>
+              <span>Solar Grids</span>
             </li>
           </Link>
           <Link

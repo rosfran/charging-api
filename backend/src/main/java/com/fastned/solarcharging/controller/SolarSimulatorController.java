@@ -46,44 +46,20 @@ public class SolarSimulatorController {
 
     @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @PostMapping("/load")
-    public ResponseEntity<ApiResponse<String>>  handleSolarGridStateFileUpload(@RequestPart("file") MultipartFile file,
+    public ResponseEntity<ApiResponse<String>>  handleSolarGridStateFileUpload(@RequestBody List<SolarGridRequest> solarGrid,
                                                                                Authentication auth,
                                                                                RedirectAttributes redirectAttributes)  {
-        final JsonParser springParser = JsonParserFactory.getJsonParser();
 
-        String fileContent = "";
-
-        try {
-            fileContent = new String( file.getInputStream().readAllBytes() );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        List<Object> list = springParser.parseList(fileContent);
 
         UserDetails user = (UserDetails)auth.getPrincipal();
 
         UserResponse userResponse = userService.findByName(user.getUsername());
 
-        NetworkCreateResponse response = SolarGridUtils.processIncomingNetworkFile(networkService, solarGridService, list, userResponse, null);
-
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
+        NetworkCreateResponse response = SolarGridUtils.processIncomingNetworkFile2(networkService, solarGridService, solarGrid, userResponse, null);
 
         return ResponseEntity.status(HttpStatus.RESET_CONTENT).body(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response.toString()));
     }
 
-    /**
-     * Fetches a single solar grid by the given id
-     *
-     * @param id
-     * @return NetworkResponse
-     */
-    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<NetworkResponse>> findById(@PathVariable long id) {
-        final NetworkResponse response = networkService.findById(id);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
-    }
 
     /**
      * Fetches all Solar Grid based on the given userId
@@ -92,64 +68,11 @@ public class SolarSimulatorController {
      * @return List of NetworkResponse
      */
     @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
-    @GetMapping("/users/{userId}")
+    @GetMapping("/output/{totalDays}")
     public ResponseEntity<ApiResponse<List<NetworkResponse>>> findAllByUserId(@PathVariable long userId) {
         final List<NetworkResponse> response = networkService.findAllByUserId(userId);
         return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
     }
 
 
-    /**
-     * Fetches all Solar Grids based on the given parameters
-     *
-     * @param pageable
-     * @return List of NetworkResponse
-     */
-    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
-    @GetMapping
-    public ResponseEntity<ApiResponse<Page<NetworkResponse>>> findAll(Pageable pageable) {
-        final Page<NetworkResponse> response = networkService.findAll(pageable);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
-    }
-
-    /**
-     * Creates a new solar grid using the given request parameters
-     *
-     * @param request
-     * @return id of the created solar grid
-     */
-    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
-    @PostMapping
-    public ResponseEntity<ApiResponse<CommandResponse>> create(@Valid @RequestBody NetworkRequest request) {
-        final CommandResponse response = networkService.create(request);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
-    }
-
-    /**
-     * Updates solar grid using the given request parameters
-     *
-     * @return id of the updated solar grid
-     */
-    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
-    @PutMapping
-    public ResponseEntity<ApiResponse<CommandResponse>> update(@Valid @RequestBody NetworkRequest request) {
-        final CommandResponse response = networkService.update(request);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
-    }
-
-    /**
-     * Deletes solar grid by id
-     *
-     * @param id
-     */
-    @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteById(@PathVariable long id) {
-        networkService.deleteById(id);
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
-    }
 }

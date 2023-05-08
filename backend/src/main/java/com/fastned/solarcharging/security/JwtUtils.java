@@ -11,7 +11,7 @@ import java.util.Date;
 import static com.fastned.solarcharging.common.Constants.*;
 
 /**
- * Utility class for Jwt related tasks
+ * Utility class for JWT related tasks
  */
 @Slf4j(topic = "JwtUtils")
 @Component

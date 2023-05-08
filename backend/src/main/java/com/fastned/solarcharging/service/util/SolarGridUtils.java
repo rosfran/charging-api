@@ -70,5 +70,31 @@ public class SolarGridUtils {
     }
 
 
+    public static NetworkCreateResponse processIncomingNetworkFile2(NetworkService networkService, SolarGridService solarGridService, List<SolarGridRequest> list, UserResponse userResponse, Integer elapsedTimeDays) {
+        NetworkCreateResponse response = new NetworkCreateResponse();
+        for (final SolarGridRequest solRequest: list) {
+                NetworkRequest network = new NetworkRequest();
+                network.setName(solRequest.getName());
+                network.setIdUser(userResponse.getId());
+
+                CommandResponse net = networkService.create(network);
+                solRequest.setIdNetwork(net.id());
+
+                SolarGridResponse solarGridResponse = solarGridService.create(solRequest);
+
+                response.getResponseList().add( solarGridResponse );
+
+                // sum up all the local SolarGrid power output
+                if ( elapsedTimeDays != null && elapsedTimeDays > 0 )
+                    response.setPowerOutput( response.getPowerOutput() + SolarGridUtils.calculatePowerOutput(solarGridResponse.getAge()) );
+                else
+                    response.setPowerOutput( response.getPowerOutput() + solarGridResponse.getPowerOutput() );
+            }
+
+
+        return response;
+    }
+
+
 
 }

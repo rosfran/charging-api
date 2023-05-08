@@ -55,11 +55,11 @@ public class SolarGridService {
     /**
      * Fetches a single solar grid by the given id
      *
-     * @param id
+     * @param userId
      * @return SolarGridResponse
      */
-    public Page<SolarGridResponse> findByUserId(long id) {
-        List<Network> lstNetworks = networkRepository.findAllByUserId(id);
+    public Page<SolarGridResponse> findByUserId(long userId) {
+        List<Network> lstNetworks = networkRepository.findAllByUserId(userId);
 
         if ( lstNetworks.size() == 0 ) {
             throw new  NoSuchElementFoundException(Constants.NOT_FOUND_NETWORK);

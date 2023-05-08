@@ -6,9 +6,15 @@ export const solarGridColumns = [
     width: 400,
   },
   {
-    field: "type",
-    headerName: "Type",
+    field: "age",
+    headerName: "Age",
     width: 400,
-    valueGetter: ({ row }) => row.type.name,
+    valueGetter: ({ row }) => row.age,
+  },
+  {
+    field: "powerOutput",
+    headerName: "Power Output",
+    width: 400,
+    valueGetter: ({ row }) => row.powerOutput,
   },
 ];
