@@ -48,7 +48,7 @@ public class SolarGridController {
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<SolarGridResponse>> findById(@PathVariable long id) {
         final SolarGridResponse response = solarGridService.findById(id);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+        return ResponseEntity.ok(new ApiResponse<>( SUCCESS, response));
     }
 
     /**
@@ -61,7 +61,7 @@ public class SolarGridController {
     @GetMapping("/users/{id}")
     public ResponseEntity<ApiResponse<List<SolarGridResponse>>> findByUserId(@PathVariable long id) {
         final List<SolarGridResponse> response = solarGridService.findByUserId(id);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+        return ResponseEntity.ok(new ApiResponse<>( SUCCESS, response));
     }
 
     /**
@@ -74,7 +74,7 @@ public class SolarGridController {
     @GetMapping
     public ResponseEntity<ApiResponse<Page<SolarGridResponse>>> findAll(Pageable pageable) {
         final Page<SolarGridResponse> response = solarGridService.findAll(pageable);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+        return ResponseEntity.ok(new ApiResponse<>( SUCCESS, response));
     }
 
     /**
@@ -89,7 +89,7 @@ public class SolarGridController {
         final SolarGridResponse response = solarGridService.create(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+                .body(new ApiResponse<>( SUCCESS, response));
     }
 
     /**
@@ -101,7 +101,7 @@ public class SolarGridController {
     @PutMapping
     public ResponseEntity<ApiResponse<CommandResponse>> update(@Valid @RequestBody SolarGridRequest request) {
         final CommandResponse response = solarGridService.update(request);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+        return ResponseEntity.ok(new ApiResponse<>( SUCCESS, response));
     }
 
     /**

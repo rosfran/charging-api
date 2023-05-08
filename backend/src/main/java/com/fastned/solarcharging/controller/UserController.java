@@ -39,7 +39,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<UserResponse>> findById(@PathVariable long id) {
         final UserResponse response = userService.findById(id);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+        return ResponseEntity.ok(new ApiResponse<>( SUCCESS, response));
     }
 
     /**
@@ -52,7 +52,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity<ApiResponse<Page<UserResponse>>> findAll(Pageable pageable) {
         final Page<UserResponse> response = userService.findAll(pageable);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+        return ResponseEntity.ok(new ApiResponse<>(SUCCESS, response));
     }
 
     /**
@@ -67,7 +67,7 @@ public class UserController {
         final CommandResponse response = userService.create(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+                .body(new ApiResponse<>(SUCCESS, response));
     }
 
     /**
@@ -79,7 +79,7 @@ public class UserController {
     @PutMapping
     public ResponseEntity<ApiResponse<CommandResponse>> update(@Valid @RequestBody ProfileRequest request) {
         final CommandResponse response = userService.update(request);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+        return ResponseEntity.ok(new ApiResponse<>(SUCCESS, response));
     }
 
     /**
@@ -91,7 +91,7 @@ public class UserController {
     @PutMapping("/profile")
     public ResponseEntity<ApiResponse<CommandResponse>> updateFullName(@Valid @RequestBody ProfileRequest request) {
         final CommandResponse response = userService.updateFullName(request);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+        return ResponseEntity.ok(new ApiResponse<>(SUCCESS, response));
     }
 
     /**

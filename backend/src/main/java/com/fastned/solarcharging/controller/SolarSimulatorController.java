@@ -61,7 +61,7 @@ public class SolarSimulatorController {
 
         NetworkCreateResponse response = SolarGridUtils.processIncomingNetwork(networkService, solarGridService, solarGrid, userResponse, null);
 
-        return ResponseEntity.status(HttpStatus.RESET_CONTENT).body(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response.toString()));
+        return ResponseEntity.status(HttpStatus.RESET_CONTENT).body(new ApiResponse<>( SUCCESS, response.toString()));
     }
 
     /**
@@ -94,7 +94,7 @@ public class SolarSimulatorController {
             }
         }
 
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, solarSimulatorTotalOutputResponse));
+        return ResponseEntity.ok(new ApiResponse<>( SUCCESS, solarSimulatorTotalOutputResponse));
     }
 
     /**
@@ -123,7 +123,7 @@ public class SolarSimulatorController {
             }
         }
 
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, responseList));
+        return ResponseEntity.ok(new ApiResponse<>( SUCCESS, responseList));
     }
 
 

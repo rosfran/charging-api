@@ -71,7 +71,7 @@ public class NetworkController {
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response.toString()));
+        return ResponseEntity.ok(new ApiResponse<>( SUCCESS, response.toString()));
     }
 
 
@@ -85,7 +85,7 @@ public class NetworkController {
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<NetworkResponse>> findById(@PathVariable long id) {
         final NetworkResponse response = networkService.findById(id);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+        return ResponseEntity.ok(new ApiResponse<>( SUCCESS, response));
     }
 
     /**
@@ -98,7 +98,7 @@ public class NetworkController {
     @GetMapping("/users/{userId}")
     public ResponseEntity<ApiResponse<List<NetworkResponse>>> findAllByUserId(@PathVariable long userId) {
         final List<NetworkResponse> response = networkService.findAllByUserId(userId);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+        return ResponseEntity.ok(new ApiResponse<>( SUCCESS, response));
     }
 
 
@@ -112,7 +112,7 @@ public class NetworkController {
     @GetMapping
     public ResponseEntity<ApiResponse<Page<NetworkResponse>>> findAll(Pageable pageable) {
         final Page<NetworkResponse> response = networkService.findAll(pageable);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+        return ResponseEntity.ok(new ApiResponse<>( SUCCESS, response));
     }
 
     /**
@@ -127,7 +127,7 @@ public class NetworkController {
         final CommandResponse response = networkService.create(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+                .body(new ApiResponse<>( SUCCESS, response));
     }
 
     /**
@@ -139,7 +139,7 @@ public class NetworkController {
     @PutMapping
     public ResponseEntity<ApiResponse<CommandResponse>> update(@Valid @RequestBody NetworkRequest request) {
         final CommandResponse response = networkService.update(request);
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
+        return ResponseEntity.ok(new ApiResponse<>( SUCCESS, response));
     }
 
     /**

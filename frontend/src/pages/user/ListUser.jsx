@@ -91,10 +91,10 @@ export default ListUser;
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = useState(false);
-  const [networks, setNetworks] = useState([]);
+  const [solarGrids, setSolarGrids] = useState([]);
   const [id, setId] = useState();
   const navigate = useNavigate();
-  const pageTitle = "Networks of the User";
+  const pageTitle = "SolarGrids of the User";
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -102,11 +102,11 @@ function Row(props) {
       const userId = AuthService.getCurrentUser()?.id;
       HttpService.getWithAuth("/solar-grid/users/" + userId)
         .then((response) => {
-          setNetworks(response.data);
+          setSolarGrids(response.data);
         })
         .catch((error) => {
           if (error.response.status === 404) {
-            setNetworks([]);
+            setSolarGrids([]);
           } else if (error.response?.data?.errors) {
             error.response?.data?.errors.map((e) =>
               enqueueSnackbar(e.field + " " + e.message, { variant: "error" })
@@ -172,17 +172,17 @@ function Row(props) {
                 <TableHead>
                   <TableRow>
                     <TableCell>Name</TableCell>
-                    <TableCell>Type</TableCell>
+                    <TableCell>Age</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {networks.map((network) => (
-                    <TableRow key={network.id}>
+                  {solarGrids.map((solarGrid) => (
+                    <TableRow key={solarGrid.id}>
                       <TableCell component="th" scope="row">
-                        {network.name}
+                        {solarGrid.name}
                       </TableCell>
                       <TableCell component="th" scope="row">
-                        {network.solarGrid.name}
+                        {solarGrid.age}
                       </TableCell>
                     </TableRow>
                   ))}
