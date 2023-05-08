@@ -17,9 +17,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Clock;
 import java.time.Instant;
+import java.util.List;
 
 import static com.fastned.solarcharging.common.Constants.SUCCESS;
 
+/**
+ * A SolarGrid is the minimum unit for producing energy. It needs to be
+ * installed for at least 60 days before starting to produce energy
+ */
 @CrossOrigin(origins = "http://localhost:3000/")
 @Slf4j(topic = "SolarGridController")
 @RestController
@@ -54,8 +59,8 @@ public class SolarGridController {
      */
     @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @GetMapping("/user/{id}")
-    public ResponseEntity<ApiResponse<Page<SolarGridResponse>>> findByUserId(@PathVariable long id) {
-        final Page<SolarGridResponse> response = solarGridService.findByUserId(id);
+    public ResponseEntity<ApiResponse<List<SolarGridResponse>>> findByUserId(@PathVariable long id) {
+        final List<SolarGridResponse> response = solarGridService.findByUserId(id);
         return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));
     }
 

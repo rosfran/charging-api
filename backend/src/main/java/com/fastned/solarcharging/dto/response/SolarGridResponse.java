@@ -24,7 +24,7 @@ public class SolarGridResponse {
 
     private Integer age;
 
-    private Integer powerOutput;
+    private Double powerOutput;
 
     private Boolean isFirstState;
 

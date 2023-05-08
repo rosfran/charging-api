@@ -58,14 +58,14 @@ public class SolarGridService {
      * @param userId
      * @return SolarGridResponse
      */
-    public Page<SolarGridResponse> findByUserId(long userId) {
+    public List<SolarGridResponse> findByUserId(long userId) {
         List<Network> lstNetworks = networkRepository.findAllByUserId(userId);
 
         if ( lstNetworks.size() == 0 ) {
             throw new  NoSuchElementFoundException(Constants.NOT_FOUND_NETWORK);
         }
-        return solarGridRepository.findAllByNetworkId(lstNetworks.get(0).getId(), PageRequest.ofSize(30))
-                .map(solarGridResponseMapper::toDto);
+        return solarGridRepository.findAllByNetworkId(lstNetworks.get(0).getId())
+                .stream().map(solarGridResponseMapper::toDto).toList();
     }
 
     /**

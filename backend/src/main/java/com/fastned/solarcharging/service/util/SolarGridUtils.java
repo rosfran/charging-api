@@ -17,14 +17,31 @@ import java.util.Map;
 public class SolarGridUtils {
 
     public static final int DAYS_IN_A_YEAR = 365;
+    public static final int DAYS_POWER_PRODUCTION_ON_HOLD = 60;
 
+    /**
+     * Calculate the power output generated for a given SolarGrid
+     *
+     * Solar grids have to be installed first, so only start to produce energy after 60 days of placement (age 0 is day of placement).
+     *
+     * @param days
+     * @return The calculated amount of power generated, or 0 in case the
+     */
     public static double calculatePowerOutput(int days) {
-
-        return 20*(1-(days/ DAYS_IN_A_YEAR *0.005));
+        if ( days  > DAYS_POWER_PRODUCTION_ON_HOLD )
+            return 20*(1-( ( days - DAYS_POWER_PRODUCTION_ON_HOLD)/ DAYS_IN_A_YEAR *0.005));
+        else
+            return 0;
     }
 
     public static NetworkCreateResponse processIncomingNetworkFile(NetworkService networkService, SolarGridService solarGridService, List<Object> list, UserResponse userResponse, Integer elapsedTimeDays) {
         NetworkCreateResponse response = new NetworkCreateResponse();
+
+        NetworkRequest network = new NetworkRequest();
+        network.setName(userResponse.getUsername());
+        network.setIdUser(userResponse.getId());
+        CommandResponse net = networkService.create(network);
+
         for (final Object o: list) {
             if (o instanceof Map) {
                 Map<String, Object> map = (Map<String, Object>) o;
@@ -47,11 +64,6 @@ public class SolarGridUtils {
                     i++;
                 }
 
-                NetworkRequest network = new NetworkRequest();
-                network.setName(solRequest.getName());
-                network.setIdUser(userResponse.getId());
-
-                CommandResponse net = networkService.create(network);
                 solRequest.setIdNetwork(net.id());
 
                 SolarGridResponse solarGridResponse = solarGridService.create(solRequest);
@@ -70,14 +82,14 @@ public class SolarGridUtils {
     }
 
 
-    public static NetworkCreateResponse processIncomingNetworkFile2(NetworkService networkService, SolarGridService solarGridService, List<SolarGridRequest> list, UserResponse userResponse, Integer elapsedTimeDays) {
+    public static NetworkCreateResponse processIncomingNetwork(NetworkService networkService, SolarGridService solarGridService, List<SolarGridRequest> list, UserResponse userResponse, Integer elapsedTimeDays) {
         NetworkCreateResponse response = new NetworkCreateResponse();
-        for (final SolarGridRequest solRequest: list) {
-                NetworkRequest network = new NetworkRequest();
-                network.setName(solRequest.getName());
-                network.setIdUser(userResponse.getId());
+        NetworkRequest network = new NetworkRequest();
+        network.setName(userResponse.getUsername());
+        network.setIdUser(userResponse.getId());
+        CommandResponse net = networkService.create(network);
 
-                CommandResponse net = networkService.create(network);
+        for (final SolarGridRequest solRequest: list) {
                 solRequest.setIdNetwork(net.id());
 
                 SolarGridResponse solarGridResponse = solarGridService.create(solRequest);

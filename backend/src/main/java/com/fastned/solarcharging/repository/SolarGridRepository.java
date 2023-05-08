@@ -14,6 +14,6 @@ public interface SolarGridRepository extends JpaRepository<SolarGrid, Long> {
 
     boolean existsByNameIgnoreCase(String name);
 
-    Page<SolarGrid> findAllByNetworkId(long networkId, Pageable page);
+    List<SolarGrid> findAllByNetworkId(long networkId);
 
 }

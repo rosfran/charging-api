@@ -4,6 +4,7 @@ export const solarGridColumns = [
     field: "name",
     headerName: "Solar Grid Name",
     width: 400,
+    valueGetter: ({ row }) => row.name,
   },
   {
     field: "age",

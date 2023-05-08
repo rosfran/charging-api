@@ -32,7 +32,7 @@ const ListSolarGrid = () => {
     const userId = AuthService.getCurrentUser()?.id;
     HttpService.getWithAuth("/api/v1/solar-grid/user/" + userId)
       .then((response) => {
-        setData(response.data);
+        setData(response.data.content);
       })
       .catch((error) => {
         if (error.response.status === 404) {
@@ -119,7 +119,7 @@ const ListSolarGrid = () => {
           userColumns={solarGridColumns}
           actionColumn={actionColumn}
           data={data}
-          to={"/api/v1/solar-grid/"}
+          to={"/solar-grid/new"}
         />
       </div>
       <Dialog
