@@ -1,5 +1,6 @@
 package com.fastned.solarcharging.controller;
 
+import com.fastned.solarcharging.common.Constants;
 import com.fastned.solarcharging.dto.request.NetworkRequest;
 import com.fastned.solarcharging.dto.request.SolarGridRequest;
 import com.fastned.solarcharging.dto.response.*;
@@ -53,6 +54,9 @@ public class SolarSimulatorController {
     public ResponseEntity<ApiResponse<String>>  handleSolarGridStateFileUpload(@RequestBody List<SolarGridRequest> solarGrid,
                                                                                Authentication auth,
                                                                                RedirectAttributes redirectAttributes)  {
+        if ( solarGrid.size() == 0 )
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>( Constants.VALIDATION_ERROR, "JSON Request payload with SolarGrid data is invalid"));
+
         UserDetails user = (UserDetails)auth.getPrincipal();
 
         UserResponse userResponse = userService.findByName(user.getUsername());
@@ -77,6 +81,8 @@ public class SolarSimulatorController {
     public ResponseEntity<ApiResponse<SolarSimulatorTotalOutputResponse>> generateOutputDuringDays(@PathVariable Integer days, Authentication auth) {
 
         SolarSimulatorTotalOutputResponse solarSimulatorTotalOutputResponse = new SolarSimulatorTotalOutputResponse();
+        if ( days == null || days == 0 )
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>( Constants.VALIDATION_ERROR, solarSimulatorTotalOutputResponse));
 
         // first, check if the total of days is more than 60 days, because before that limit none of the solar grids can produce any power output
         if ( days > SolarGridUtils.DAYS_POWER_PRODUCTION_ON_HOLD ) {
@@ -109,6 +115,9 @@ public class SolarSimulatorController {
     @GetMapping("/network/{days}")
     public ResponseEntity<ApiResponse<List<SolarGridResponse>>> generateNetworkDuringDays(@PathVariable Integer days, Authentication auth) {
         List<SolarGridResponse> responseList = new ArrayList<>();
+        if ( days == null || days == 0 )
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>( Constants.VALIDATION_ERROR, responseList));
+
         // first, check if the total of days is more than 60 days, because before that limit none of the solar grids can produce any power output
         if ( days > SolarGridUtils.DAYS_POWER_PRODUCTION_ON_HOLD ) {
             UserDetails user = (UserDetails) auth.getPrincipal();
