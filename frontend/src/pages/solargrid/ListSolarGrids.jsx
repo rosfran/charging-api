@@ -32,7 +32,7 @@ const ListSolarGrid = () => {
     const userId = AuthService.getCurrentUser()?.id;
     HttpService.getWithAuth("/solar-grid/users/" + userId)
       .then((response) => {
-        setData(response.data.content);
+        setData(response.data);
       })
       .catch((error) => {
         if (error.response.status === 404) {

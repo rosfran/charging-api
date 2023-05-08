@@ -43,18 +43,16 @@ public class SolarSimulatorController {
      *
      * In that case, the SolarGrid list will be sent in the HTTP Request payload
      *
-     * @param solarGrid
-     * @param auth
-     * @param redirectAttributes
-     * @return
+     * @param solarGrid             The JSON Request Body with the SolarGrid representation
+     * @param auth                  The user credentials
+     * @param redirectAttributes    Bean with the redirect attributes
+     * @return  Response String in the ApiResponse format
      */
     @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
     @PostMapping("/load")
     public ResponseEntity<ApiResponse<String>>  handleSolarGridStateFileUpload(@RequestBody List<SolarGridRequest> solarGrid,
                                                                                Authentication auth,
                                                                                RedirectAttributes redirectAttributes)  {
-
-
         UserDetails user = (UserDetails)auth.getPrincipal();
 
         UserResponse userResponse = userService.findByName(user.getUsername());

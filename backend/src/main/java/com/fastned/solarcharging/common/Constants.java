@@ -38,5 +38,7 @@ public final class Constants {
     public static final String JWT_EMPTY = "JWT claims string is empty: {}";
     public static final String SUCCESS = "Success";
 
+    public static final String INVALID_FILE = "Invalid or empty file";
+
 
 }

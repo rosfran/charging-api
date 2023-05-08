@@ -51,6 +51,9 @@ public class NetworkController {
                                                                                @RequestPart("body") LoadFileRequest body,
                                                                                Authentication auth,
                                                                                RedirectAttributes redirectAttributes)  {
+        if ( file == null || file.isEmpty() ) {
+            return ResponseEntity.ok(new ApiResponse<>( com.fastned.solarcharging.common.Constants.INVALID_FILE, "File empty"));
+        }
         final JsonParser springParser = JsonParserFactory.getJsonParser();
 
         String fileContent = "";
@@ -60,7 +63,7 @@ public class NetworkController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        List<Object> list = springParser.parseList(fileContent);
+                List<Object> list = springParser.parseList(fileContent);
 
         UserDetails user = (UserDetails)auth.getPrincipal();
 
