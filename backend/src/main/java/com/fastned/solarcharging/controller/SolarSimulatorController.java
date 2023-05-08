@@ -1,6 +1,5 @@
 package com.fastned.solarcharging.controller;
 
-import com.fastned.solarcharging.dto.request.LoadFileRequest;
 import com.fastned.solarcharging.dto.request.NetworkRequest;
 import com.fastned.solarcharging.dto.request.SolarGridRequest;
 import com.fastned.solarcharging.dto.response.*;
@@ -32,12 +31,12 @@ import java.util.Map;
 
 import static com.fastned.solarcharging.common.Constants.SUCCESS;
 
-@Slf4j(topic = "NetworkController")
+@Slf4j(topic = "SolarSimulatorController")
 @CrossOrigin(origins = "http://localhost:3000/")
 @RestController
-@RequestMapping("/api/v1/network")
+@RequestMapping("/api/v1/solar-simulator")
 @RequiredArgsConstructor
-public class NetworkController {
+public class SolarSimulatorController {
 
     private final Clock clock;
     private final NetworkService networkService;
@@ -46,9 +45,8 @@ public class NetworkController {
     private final UserService userService;
 
     @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
-    @PostMapping("/load-file")
+    @PostMapping("/load")
     public ResponseEntity<ApiResponse<String>>  handleSolarGridStateFileUpload(@RequestPart("file") MultipartFile file,
-                                                                               @RequestPart("body") LoadFileRequest body,
                                                                                Authentication auth,
                                                                                RedirectAttributes redirectAttributes)  {
         final JsonParser springParser = JsonParserFactory.getJsonParser();
@@ -66,14 +64,13 @@ public class NetworkController {
 
         UserResponse userResponse = userService.findByName(user.getUsername());
 
-        NetworkCreateResponse response = SolarGridUtils.processIncomingNetworkFile(networkService, solarGridService, list, userResponse, body.getTimeElapsedDays());
+        NetworkCreateResponse response = SolarGridUtils.processIncomingNetworkFile(networkService, solarGridService, list, userResponse, null);
 
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
-        return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response.toString()));
+        return ResponseEntity.status(HttpStatus.RESET_CONTENT).body(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response.toString()));
     }
-
 
     /**
      * Fetches a single solar grid by the given id

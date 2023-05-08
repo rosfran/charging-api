@@ -1,6 +1,7 @@
 package com.fastned.solarcharging.service;
 
 import com.fastned.solarcharging.common.Constants;
+import com.fastned.solarcharging.dto.mapper.NetworkRequestMapper;
 import com.fastned.solarcharging.dto.request.SolarGridRequest;
 import com.fastned.solarcharging.dto.response.SolarGridResponse;
 import com.fastned.solarcharging.exception.ElementAlreadyExistsException;
@@ -21,6 +22,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+
+import static com.fastned.solarcharging.service.util.SolarGridUtils.calculatePowerOutput;
 
 /**
  * Service used for SolarGrid related operations
@@ -34,6 +38,7 @@ public class SolarGridService {
     private final NetworkRepository networkRepository;
     private final SolarGridRequestMapper solarGridRequestMapper;
     private final SolarGridResponseMapper solarGridResponseMapper;
+    private final NetworkRequestMapper networkRequestMapper;
 
     /**
      * Fetches a single solar grid by the given id
@@ -96,14 +101,19 @@ public class SolarGridService {
      * @param request
      * @return id of the created solar grid
      */
-    public CommandResponse create(SolarGridRequest request) {
+    public SolarGridResponse create(SolarGridRequest request) {
         if (solarGridRepository.existsByNameIgnoreCase(request.getName()))
             throw new ElementAlreadyExistsException(Constants.ALREADY_EXISTS_SOLAR_GRID);
 
         final SolarGrid solarGrid = solarGridRequestMapper.toEntity(request);
+
+        solarGrid.setPowerOutput(calculatePowerOutput(request.getAge()));
+        Optional<Network> net = networkRepository.findById(request.getIdNetwork());
+
+        solarGrid.setNetwork(net.get());
         solarGridRepository.save(solarGrid);
         log.info(Constants.CREATED_SOLAR_GRID);
-        return CommandResponse.builder().id(solarGrid.getId()).build();
+        return solarGridResponseMapper.toDto(solarGrid);
     }
 
     /**
@@ -120,7 +130,9 @@ public class SolarGridService {
         if (!request.getName().equalsIgnoreCase(solarGrid.getName()) && solarGridRepository.existsByNameIgnoreCase(request.getName()))
             throw new ElementAlreadyExistsException(Constants.ALREADY_EXISTS_SOLAR_GRID);
 
-        solarGridRepository.save(solarGridRequestMapper.toEntity(request));
+        solarGrid.setPowerOutput(calculatePowerOutput(request.getAge()));
+
+        solarGridRepository.save(solarGrid);
         log.info(Constants.UPDATED_SOLAR_GRID);
         return CommandResponse.builder().id(solarGrid.getId()).build();
     }

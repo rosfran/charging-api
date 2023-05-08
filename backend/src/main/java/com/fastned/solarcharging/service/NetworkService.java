@@ -84,20 +84,6 @@ public class NetworkService {
         return networks;
     }
 
-    /**
-     * Fetches counts of all networks by selected type
-     *
-     * @param types
-     * @return selected type names and count of each type
-     */
-//    @Transactional(readOnly = true)
-//    public Map<String, Long> findAllByType(TypeSetRequest types) {
-//        return networkRepository.findAll().stream()
-//                .filter(network -> types.getIds().isEmpty() || types.getIds().contains(network.getType().getId()))
-//                .collect(Collectors.groupingBy(x -> x.getType().getName(), Collectors.counting()));
-//        // if we need to return SolarGridResponse instead of String (type names), we can use this:
-//        // .collect(Collectors.groupingBy(x -> typeResponseMapper.toDto(x.getType()), Collectors.counting()));
-//    }
 
     /**
      * @param request
@@ -111,10 +97,6 @@ public class NetworkService {
         return CommandResponse.builder().id(network.getId()).build();
     }
 
-    public double calculatePowerOutput( int days ) {
-
-        return 20*(1-(days/365*0.005));
-    }
 
     /**
      * Updates network using the given request parameters

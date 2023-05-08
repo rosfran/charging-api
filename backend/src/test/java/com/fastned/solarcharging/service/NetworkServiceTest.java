@@ -4,12 +4,10 @@ import com.fastned.solarcharging.dto.mapper.NetworkRequestMapper;
 import com.fastned.solarcharging.dto.mapper.NetworkResponseMapper;
 import com.fastned.solarcharging.dto.mapper.UserRequestMapper;
 import com.fastned.solarcharging.dto.request.NetworkRequest;
-import com.fastned.solarcharging.dto.request.UserRequest;
 import com.fastned.solarcharging.dto.response.NetworkResponse;
 import com.fastned.solarcharging.exception.NoSuchElementFoundException;
 import com.fastned.solarcharging.model.Network;
 import com.fastned.solarcharging.model.SolarGrid;
-import com.fastned.solarcharging.model.State;
 import com.fastned.solarcharging.model.User;
 import com.fastned.solarcharging.repository.NetworkRepository;
 import org.junit.jupiter.api.Test;
@@ -108,7 +106,7 @@ class NetworkServiceTest {
      * Method under test: {@link NetworkService#findAllByUserId(long)} (TypeSetRequest)}
      */
     @Test
-    void findAllByType_should_returnFilteredTypes_when_TypesNotEmpty() {
+    void findAllByType_should_returnFilteredTypes_when_UsersNotEmpty() {
 
         Network network1 = new Network();
         final User user = new User();
@@ -122,40 +120,32 @@ class NetworkServiceTest {
         solarGrid1.setId(101L);
         solarGrid1.setName("Amsterdam");
 
-        State state1 = new State();
-        state1.setAge(854);
+        solarGrid1.setAge(854);
 
-        state1.setSolarGrid(solarGrid1);
-        
+
         SolarGrid solarGrid2 = new SolarGrid();
         solarGrid2.setId(102L);
         solarGrid2.setName("Groningen");
 
-
-        State state2 = new State();
-        state2.setAge(473);
-
-        state2.setSolarGrid(solarGrid2);
+        solarGrid2.setAge(473);
 
         SolarGrid solarGrid3 = new SolarGrid();
         solarGrid3.setId(103L);
         solarGrid3.setName("Maastricht");
 
-        State state3 = new State();
-        state3.setAge(854);
+        solarGrid3.setAge(854);
 
-        state3.setSolarGrid(solarGrid3);
 
         Set<Long> types = new HashSet<>(Arrays.asList(101L, 102L));
 
         ArrayList<Network> networkList = new ArrayList<>();
         networkList.add(network1);
 
-        when(networkRepository.findAll()).thenReturn(networkList);
+       when(networkRepository.findAllByUserId(user.getId())).thenReturn(networkList);
 
        List<NetworkResponse> result = networkService.findAllByUserId(user.getId());
 
-        assertEquals(3, result.size());
+        assertEquals(1, result.size());
 
     }
 

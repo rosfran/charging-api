@@ -12,6 +12,9 @@ CREATE TABLE solar_grid
 (
     id              BIGINT      NOT NULL,
     name            VARCHAR(500) NOT NULL,
+    age             INT         NOT NULL,
+    power_output    REAL         NOT NULL,
+    created_at      timestamp    default current_timestamp,
     network_id      BIGINT      NOT NULL,
     CONSTRAINT pk_solar_grid PRIMARY KEY (id)
 );
@@ -24,16 +27,16 @@ CREATE TABLE network
     CONSTRAINT pk_network PRIMARY KEY (id)
 );
 
-CREATE TABLE state
-(
-    id              BIGINT      NOT NULL,
-    age             INT         NOT NULL,
-    power_output    REAL         NOT NULL,
-    solar_grid_id   BIGINT      NOT NULL,
-    created_at      timestamp    NOT NULL,
-    is_first_state bool         NOT NULL DEFAULT false,
-    CONSTRAINT pk_state PRIMARY KEY (id)
-);
+--CREATE TABLE state
+--(
+--    id              BIGINT      NOT NULL,
+--    age             INT         NOT NULL,
+--    power_output    REAL         NOT NULL,
+--    solar_grid_id   BIGINT      NOT NULL,
+--    created_at      timestamp    NOT NULL,
+--    is_first_state bool         NOT NULL DEFAULT false,
+--    CONSTRAINT pk_state PRIMARY KEY (id)
+--);
 
 CREATE TABLE role
 (

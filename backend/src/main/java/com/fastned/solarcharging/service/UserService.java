@@ -53,6 +53,18 @@ public class UserService {
     }
 
     /**
+     * Fetches a single user by the given id
+     *
+     * @param
+     * @return UserResponse
+     */
+    public UserResponse findByName(String username) {
+        return userRepository.findByUsername(username)
+                .map(userResponseMapper::toDto)
+                .orElseThrow(() -> new NoSuchElementFoundException(NOT_FOUND_USER));
+    }
+
+    /**
      * Fetches a single user (entity) by the given id
      *
      * @param id

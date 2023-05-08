@@ -9,14 +9,18 @@ import java.util.List;
  * Data Transfer Object for SolarGrid response
  */
 @Data
-public class SolarGridCreateResponse {
+public class NetworkCreateResponse {
 
     private Long id;
     private String name;
 
-    private Integer powerOutput;
+    private Double powerOutput;
 
-    private List<StateResponse> responseList = new ArrayList<>();
+    private List<SolarGridResponse> responseList = new ArrayList<>();
+
+    public NetworkCreateResponse() {
+        this.powerOutput = 0.0;
+    }
 
     /**
      *  @return Produced: [Output] kWh
@@ -27,10 +31,10 @@ public class SolarGridCreateResponse {
      *
      */
     public String toString() {
-        String ret = "Produced: %d kWh\n".formatted(this.powerOutput);
+        String ret = "Produced: %,.2f kWh\n".formatted(this.powerOutput);
 
         ret += "Network:\n";
-        for ( StateResponse st : responseList ) {
+        for ( SolarGridResponse st : responseList ) {
             ret += "%s in use for %d days\n".formatted(st.getName(), st.getAge());
         }
 

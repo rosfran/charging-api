@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,11 +30,19 @@ public class SolarGrid {
     @Column(length = 500, nullable = false, unique = true)
     private String name;
 
+    @Column(nullable = false)
+    private Integer age;
+
+    @Column(nullable = false)
+    private Double powerOutput;
+
+    @Column(nullable = false)
+    private Date createdAt;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "network_id", referencedColumnName = "id", nullable = false)
     private Network network;
 
-    @OneToMany(mappedBy = "solarGrid", cascade = CascadeType.ALL)
-    private Set<State> states = new HashSet<>();
 
 }
