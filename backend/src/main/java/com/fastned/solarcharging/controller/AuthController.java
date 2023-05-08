@@ -17,7 +17,7 @@ import java.time.Instant;
 
 import static com.fastned.solarcharging.common.Constants.SUCCESS;
 
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor

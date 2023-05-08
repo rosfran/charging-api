@@ -25,7 +25,7 @@ import static com.fastned.solarcharging.common.Constants.SUCCESS;
  * A SolarGrid is the minimum unit for producing energy. It needs to be
  * installed for at least 60 days before starting to produce energy
  */
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "http://localhost:3000")
 @Slf4j(topic = "SolarGridController")
 @RestController
 @RequestMapping("/api/v1/solar-grid")
@@ -58,7 +58,7 @@ public class SolarGridController {
      * @return SolarGridResponse
      */
     @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<ApiResponse<List<SolarGridResponse>>> findByUserId(@PathVariable long id) {
         final List<SolarGridResponse> response = solarGridService.findByUserId(id);
         return ResponseEntity.ok(new ApiResponse<>(Instant.now(clock).toEpochMilli(), SUCCESS, response));

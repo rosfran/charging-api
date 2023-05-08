@@ -32,7 +32,8 @@ const EditSolarGrid = () => {
 
   useEffect(() => {
     const getSolarGrids = async () => {
-      const response = await HttpService.getWithAuth("/api/v1/solar-grid/user/");
+      const userId = AuthService.getCurrentUser()?.id;
+      const response = await HttpService.getWithAuth("/api/v1/solar-grid/users/"+userId);
       const solarGrids = await response.data.content;
       setSolarGrids(solarGrids);
     };

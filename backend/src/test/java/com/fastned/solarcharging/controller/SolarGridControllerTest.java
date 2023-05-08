@@ -57,7 +57,7 @@ class SolarGridControllerTest extends IntegrationTest {
     @Test
     @WithMockUser(username = "user", roles = {"USER"})
     void findAllByUserId_should_returnStatusIsOk_when_IsFound() throws Exception {
-        mvc.perform((get("/api/v1/solar-grid/user/{userId}", 2)))
+        mvc.perform((get("/api/v1/solar-grid/users/{userId}", 2)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data[0].name").value("Sao Paulo"));
@@ -69,7 +69,7 @@ class SolarGridControllerTest extends IntegrationTest {
     @Test
     @WithMockUser(username = "user", roles = {"USER"})
     void findAllByUserId_should_returnStatusIsNotFound_when_IsNotFound() throws Exception {
-        mvc.perform((get("/api/v1/solar-grid/user/{id}", 999)))
+        mvc.perform((get("/api/v1/solar-grid/users/{id}", 999)))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }

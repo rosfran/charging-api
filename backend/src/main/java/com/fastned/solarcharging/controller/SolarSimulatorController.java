@@ -26,7 +26,7 @@ import java.util.List;
 import static com.fastned.solarcharging.common.Constants.SUCCESS;
 
 @Slf4j(topic = "SolarSimulatorController")
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/solar-simulator")
 @RequiredArgsConstructor

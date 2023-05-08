@@ -30,7 +30,7 @@ const ListSolarGrid = () => {
 
   const fetchData = () => {
     const userId = AuthService.getCurrentUser()?.id;
-    HttpService.getWithAuth("/api/v1/solar-grid/user/" + userId)
+    HttpService.getWithAuth("/api/v1/solar-grid/users/" + userId)
       .then((response) => {
         setData(response.data.content);
       })

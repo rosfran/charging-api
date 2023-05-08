@@ -33,7 +33,7 @@ const NewSolarGrid = () => {
   useEffect(() => {
     const getSolarGrids = async () => {
       const userId = AuthService.getCurrentUser()?.id;
-      const response = await HttpService.getWithAuth("/api/v1/solar-grid/user/" + userId)
+      const response = await HttpService.getWithAuth("/api/v1/solar-grid/users/" + userId)
       const solarGrids = await response.data.content;
       setSolarGrids(solarGrids);
     };

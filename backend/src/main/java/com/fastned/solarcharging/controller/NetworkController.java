@@ -33,7 +33,7 @@ import java.util.Map;
 import static com.fastned.solarcharging.common.Constants.SUCCESS;
 
 @Slf4j(topic = "NetworkController")
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/network")
 @RequiredArgsConstructor
