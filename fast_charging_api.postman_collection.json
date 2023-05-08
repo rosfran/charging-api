@@ -1,0 +1,198 @@
+{
+	"info": {
+		"_postman_id": "0fb08d35-d91a-4fb7-9a28-d0f4040bb122",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3555896"
+	},
+	"item": [
+		{
+			"name": "POST - Authenticate User  - John",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"johndoe\",\n\t\"password\": \"johnd@e\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - Authenticate User  - Jake",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"johndoe\",\n\t\"password\": \"johnd@e\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Query Solar Grids by UserID",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huZG9lIiwiaWF0IjoxNjgzNTY0MzU5LCJleHAiOjE2ODM1NjYxNTl9.nl0l8X6fTdzrCnKIF1OBkfco8Of9IimbOvEGf2qYsbH9_4Qf1_h8lVKbpk2j0SObugCdxq4HgPH9dl4_8CgDPQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/solar-grid/user/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"solar-grid",
+						"user",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Output from solar-simulator",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/solar-simulator/output/343",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"solar-simulator",
+						"output",
+						"343"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - Load Solar Simulator",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  {\n    \"name\": \"Amsterdam\",\n    \"age\": 854\n  },\n  {\n    \"name\": \"Groningen\",\n    \"age\": 473\n  },\n  {\n    \"name\": \"Maastricht\",\n    \"age\": 253\n  }\n]\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/solar-simulator/load",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"solar-simulator",
+						"load"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - Load Network File",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/rosfranlinsborges/dev/fastned/fast-charging/backend/src/main/resources/example_send_solar_grids.json"
+						},
+						{
+							"key": "body",
+							"value": "{\n\"timeElapsedDays\": 90\n}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/network/load-file",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"network",
+						"load-file"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

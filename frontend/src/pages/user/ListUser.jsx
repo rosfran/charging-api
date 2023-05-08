@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import HttpService from "../../services/HttpService";
+import AuthService from "../../services/AuthService";
 import "./user.scss";
 
 const ListUser = () => {
@@ -98,7 +99,8 @@ function Row(props) {
 
   useEffect(() => {
     if (open) {
-      HttpService.getWithAuth("/network/users/" + id)
+      const userId = AuthService.getCurrentUser()?.id;
+      HttpService.getWithAuth("/solar-grid/users/" + userId)
         .then((response) => {
           setNetworks(response.data);
         })

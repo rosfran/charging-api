@@ -30,7 +30,7 @@ const ListSolarGrid = () => {
 
   const fetchData = () => {
     const userId = AuthService.getCurrentUser()?.id;
-    HttpService.getWithAuth("/api/v1/solar-grid/users/" + userId)
+    HttpService.getWithAuth("/solar-grid/users/" + userId)
       .then((response) => {
         setData(response.data.content);
       })
@@ -63,7 +63,7 @@ const ListSolarGrid = () => {
   };
 
   const handleDelete = () => {
-    HttpService.deleteWithAuth("/api/v1/solar-grid/" + id)
+    HttpService.deleteWithAuth("/solar-grid/" + id)
       .then((res) => {
         fetchData();
         setOpen(false);

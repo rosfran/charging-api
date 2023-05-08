@@ -14,6 +14,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import HttpService from "../../services/HttpService";
+import AuthService from "../../services/AuthService";
 import "./solargrid.scss";
 
 const EditSolarGrid = () => {
@@ -33,7 +34,7 @@ const EditSolarGrid = () => {
   useEffect(() => {
     const getSolarGrids = async () => {
       const userId = AuthService.getCurrentUser()?.id;
-      const response = await HttpService.getWithAuth("/api/v1/solar-grid/users/"+userId);
+      const response = await HttpService.getWithAuth("/solar-grid/users/"+userId);
       const solarGrids = await response.data.content;
       setSolarGrids(solarGrids);
     };
@@ -96,27 +97,47 @@ const EditSolarGrid = () => {
                   onChange={handleInputChange}
                 />
               </Grid>
-              <Grid item>
-                <FormControl sx={{ width: 240 }}>
-                  <InputLabel id="demo-select-small">Type</InputLabel>
-                  <Select
-                    required
-                    name="typeId"
-                    label="Type"
-                    value={formValues.typeId}
-                    onChange={handleInputChange}
-                  >
-                    <MenuItem value="">
-                      <em>------------ none ------------</em>
-                    </MenuItem>
-                    {solarGrids.map((solarGrid) => (
-                      <MenuItem key={solarGrid.id} value={solarGrid.id}>
-                        {solarGrid.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
+                 <Grid item>
+                             <TextField
+                               sx={{ width: 240 }}
+                               autoFocus
+                               required
+                               id="name"
+                               name="name"
+                               label="Name"
+                               type="text"
+                               value={formValues.name}
+                               onChange={handleInputChange}
+                             />
+                           </Grid>
+
+                           <Grid item>
+                                  <TextField
+                                  sx={{ width: 240 }}
+                                  autoFocus
+                                  required
+                                  id="age"
+                                  name="age"
+                                  label="Age"
+                                  type="text"
+                                  value={formValues.age}
+                                  onChange={handleInputChange}
+                                />
+                           </Grid>
+                           <Grid item>
+                                  <TextField
+                                  sx={{ width: 240 }}
+                                  autoFocus
+                                  required
+                                  id="powerOutput"
+                                  name="powerOutput"
+                                  label="Power Output"
+                                  type="text"
+                                  value={formValues.powerOutput}
+                                  onChange={handleInputChange}
+                                />
+                           </Grid>
+
             </Grid>
             <Stack spacing={2} sx={{ py: 3, paddingRight: 0 }} direction="row">
               <Button
