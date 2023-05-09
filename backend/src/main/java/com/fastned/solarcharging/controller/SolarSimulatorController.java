@@ -26,6 +26,10 @@ import java.util.List;
 
 import static com.fastned.solarcharging.common.Constants.SUCCESS;
 
+/**
+ * Implements some endpoints to query the SolarGrids installed on some networks
+ *
+ */
 @Slf4j(topic = "SolarSimulatorController")
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -33,7 +37,6 @@ import static com.fastned.solarcharging.common.Constants.SUCCESS;
 @RequiredArgsConstructor
 public class SolarSimulatorController {
 
-    private final Clock clock;
     private final NetworkService networkService;
 
     private final SolarGridService solarGridService;
@@ -55,7 +58,9 @@ public class SolarSimulatorController {
                                                                                Authentication auth,
                                                                                RedirectAttributes redirectAttributes)  {
         if ( solarGrid.size() == 0 )
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>( Constants.VALIDATION_ERROR, "JSON Request payload with SolarGrid data is invalid"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new ApiResponse<>( Constants.VALIDATION_ERROR,
+                            "JSON Request payload with SolarGrid data is invalid"));
 
         UserDetails user = (UserDetails)auth.getPrincipal();
 

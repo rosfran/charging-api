@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Builds exception handler response in a proper format with status, message, stackTrace and errors
+ * Constructs a response in a format with status, message, stackTrace and errors
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)

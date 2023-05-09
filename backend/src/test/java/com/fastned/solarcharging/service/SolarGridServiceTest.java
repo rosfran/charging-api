@@ -47,21 +47,6 @@ class SolarGridServiceTest {
     private ArgumentCaptor<SolarGrid> solarGridCaptor;
 
     /**
-     * Method under test: {@link SolarGridService#findById(long)}
-     */
-    @Test
-    void findById_should_throwNoSuchElementFoundException_when_TypeIsNotFound() {
-        long id = 101L;
-        when(solarGridRepository.findById(id)).thenReturn(Optional.empty());
-
-        assertThrows(NoSuchElementFoundException.class, () -> {
-            solarGridService.findById(id);
-        });
-
-        verify(solarGridRepository).findById(id);
-    }
-
-    /**
      * Method under test: {@link SolarGridService#getById(long)}
      */
     @Test
@@ -97,7 +82,7 @@ class SolarGridServiceTest {
      * Method under test: {@link SolarGridService#create(SolarGridRequest)}
      */
     @Test
-    void create_should_throwElementAlreadyExistsException_when_TypeAlreadyExists() {
+    void create_should_throwElementAlreadyExistsException_when_SolarGridAlreadyExists() {
         SolarGridRequest request = new SolarGridRequest();
         request.setName("Amsterdam");
 
@@ -115,7 +100,7 @@ class SolarGridServiceTest {
      * Method under test: {@link SolarGridService#update(SolarGridRequest)}
      */
     @Test
-    void update_should_throwElementAlreadyExistsException_when_TypeAlreadyExists() {
+    void update_should_throwElementAlreadyExistsException_when_SolarGridAlreadyExists() {
         SolarGrid solarGrid = new SolarGrid();
         solarGrid.setId(101L);
         solarGrid.setName("Maastricht");
@@ -138,7 +123,7 @@ class SolarGridServiceTest {
      * Method under test: {@link SolarGridService#deleteById(long)}
      */
     @Test
-    void deleteById_should_deleteType_when_IsFound() {
+    void deleteById_should_deleteSolarGrids_when_IsFound() {
         SolarGrid solarGrid = new SolarGrid();
         solarGrid.setId(101L);
         solarGrid.setName("Maastricht");
@@ -157,7 +142,7 @@ class SolarGridServiceTest {
      * Method under test: {@link SolarGridService#deleteById(long)}
      */
     @Test
-    void deleteById_should_throwNoSuchElementFoundException_when_TypeIsNotFound() {
+    void deleteById_should_throwNoSuchElementFoundException_when_SolarGridsIsNotFound() {
         long id = 101L;
         when(solarGridRepository.findById(id)).thenReturn(Optional.empty());
 

@@ -1,7 +1,7 @@
 package com.fastned.solarcharging.exception;
 
 /**
- * Custom exception class used for when the requested record is already exists
+ * Exception used when the requested DB record already exists
  */
 public class ElementAlreadyExistsException extends RuntimeException {
 

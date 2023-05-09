@@ -119,7 +119,7 @@ const ListSolarGrid = () => {
           userColumns={solarGridColumns}
           actionColumn={actionColumn}
           data={data}
-          to={"/solar-grid/new"}
+          to={"/solargrid/new"}
         />
       </div>
       <Dialog

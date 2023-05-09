@@ -51,7 +51,7 @@ const EditSolarGrid = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    HttpService.putWithAuth("/api/v1/solar-grid", formValues)
+    HttpService.putWithAuth("/solar-grid", formValues)
       .then((response) => {
         enqueueSnackbar("Solar-grid updated successfully", { variant: "success" });
         navigate("/solargrid");

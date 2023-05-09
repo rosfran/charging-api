@@ -24,6 +24,8 @@ import static com.fastned.solarcharging.common.Constants.SUCCESS;
 /**
  * A SolarGrid is the minimum unit for producing energy. It needs to be
  * installed for at least 60 days before starting to produce energy
+ *
+ * This class implements some endpoints to Create, Update and Delete SolarGrids
  */
 @CrossOrigin(origins = "http://localhost:3000")
 @Slf4j(topic = "SolarGridController")
@@ -41,7 +43,7 @@ public class SolarGridController {
     /**
      * Fetches a single SolarGrid by the given id
      *
-     * @param id
+     * @param id            The SolarGrid ID
      * @return SolarGridResponse
      */
     @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")
@@ -54,7 +56,7 @@ public class SolarGridController {
     /**
      * Fetches a single SolarGrid by the given User id
      *
-     * @param id
+     * @param id                    The SolarGrid ID
      * @return SolarGridResponse
      */
     @PreAuthorize("hasRole(T(com.fastned.solarcharging.model.RoleType).ROLE_USER)")

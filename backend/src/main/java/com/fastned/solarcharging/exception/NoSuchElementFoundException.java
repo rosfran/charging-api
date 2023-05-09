@@ -1,7 +1,7 @@
 package com.fastned.solarcharging.exception;
 
 /**
- * Custom exception class used for when there is no record for the given filter parameters
+ * Exception thrown when there is no DB record for the given filter parameters
  */
 public class NoSuchElementFoundException extends RuntimeException {
 

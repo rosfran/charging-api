@@ -19,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
- * Configuration file used to configure security settings of the application
+ * JWT Configuration file used to configure security settings of the application
  */
 @Configuration
 @EnableWebSecurity
