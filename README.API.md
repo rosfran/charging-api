@@ -13,6 +13,8 @@ This API aims to offer ways to simulate how these solar grids produce energy, an
 
 ### Technical Solution
 
+The solution is implemented in a layered structure, based on the MVC: `controllers` (where we implement REST API endpoints - they are the point of contact with the Users), 
+`services` (which interfaces with the controllers on actions which implements high level requirements and coordinates actions among other services), repositories (which access the permanent storage),
 The technologies used for the REST API were: Java 17, Spring Boot, Spring Framework, Spring Security, Spring Data JPA, Hibernate, PostgreSQL, etc.
 
 For the Frontend the technology used were: React.JS, Node 16 and Material UI.

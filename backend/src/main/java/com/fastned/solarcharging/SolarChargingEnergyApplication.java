@@ -3,6 +3,9 @@ package com.fastned.solarcharging;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * Fast Charging API
+ */
 @SpringBootApplication
 public class SolarChargingEnergyApplication {
 

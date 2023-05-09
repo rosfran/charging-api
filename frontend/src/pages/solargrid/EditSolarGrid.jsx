@@ -97,46 +97,34 @@ const EditSolarGrid = () => {
                   onChange={handleInputChange}
                 />
               </Grid>
-                 <Grid item>
-                             <TextField
-                               sx={{ width: 240 }}
-                               autoFocus
-                               required
-                               id="name"
-                               name="name"
-                               label="Name"
-                               type="text"
-                               value={formValues.name}
-                               onChange={handleInputChange}
-                             />
-                           </Grid>
 
-                           <Grid item>
-                                  <TextField
-                                  sx={{ width: 240 }}
-                                  autoFocus
-                                  required
-                                  id="age"
-                                  name="age"
-                                  label="Age"
-                                  type="text"
-                                  value={formValues.age}
-                                  onChange={handleInputChange}
-                                />
-                           </Grid>
-                           <Grid item>
-                                  <TextField
-                                  sx={{ width: 240 }}
-                                  autoFocus
-                                  required
-                                  id="powerOutput"
-                                  name="powerOutput"
-                                  label="Power Output"
-                                  type="text"
-                                  value={formValues.powerOutput}
-                                  onChange={handleInputChange}
-                                />
-                           </Grid>
+
+               <Grid item>
+                      <TextField
+                      sx={{ width: 240 }}
+                      autoFocus
+                      required
+                      id="age"
+                      name="age"
+                      label="Age"
+                      type="text"
+                      value={formValues.age}
+                      onChange={handleInputChange}
+                    />
+               </Grid>
+               <Grid item>
+                      <TextField
+                      sx={{ width: 240 }}
+                      autoFocus
+                      required
+                      id="powerOutput"
+                      name="powerOutput"
+                      label="Power Output"
+                      type="text"
+                      value={formValues.powerOutput}
+                      onChange={handleInputChange}
+                    />
+               </Grid>
 
             </Grid>
             <Stack spacing={2} sx={{ py: 3, paddingRight: 0 }} direction="row">

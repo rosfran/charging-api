@@ -13,7 +13,7 @@ CREATE TABLE solar_grid
     id              BIGINT      NOT NULL,
     name            VARCHAR(500) NOT NULL,
     age             INT         NOT NULL,
-    power_output    REAL         NOT NULL,
+    power_output    REAL,
     created_at      timestamp    default current_timestamp,
     network_id      BIGINT      NOT NULL,
     CONSTRAINT pk_solar_grid PRIMARY KEY (id)

@@ -44,12 +44,6 @@ const Sidebar = () => {
             </div>
           )}
           <p className="title">USER</p>
-          <Link to="/profile" style={{ textDecoration: "none" }}>
-            <li>
-              <AccountCircleOutlinedIcon className="icon" />
-              <span>Profile</span>
-            </li>
-          </Link>
           <Link to="/solargrid" style={{ textDecoration: "none" }}>
             <li>
               <span>Solar Grids</span>

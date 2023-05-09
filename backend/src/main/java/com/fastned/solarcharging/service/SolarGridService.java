@@ -28,6 +28,10 @@ import static com.fastned.solarcharging.service.util.SolarGridUtils.calculatePow
 
 /**
  * Service used for SolarGrid related operations
+ *
+ * A SolarGrid is the minimum unit used for producing energy. It must be part of a Network, in a sense that, even when
+ * we have only one SolarGrid, this unique SolarGrid must be in a Network
+ *
  */
 @Slf4j(topic = "SolarGridService")
 @Service
