@@ -21,7 +21,6 @@ const NewSolarGrid = () => {
   const pageTitle = "Upload New Solar Grid";
   const defaultValues = {
     name: "",
-    typeId: "",
     userId: AuthService.getCurrentUser()?.id,
   };
 
@@ -34,7 +33,7 @@ const NewSolarGrid = () => {
     const getSolarGrids = async () => {
       const userId = AuthService.getCurrentUser()?.id;
       const response = await HttpService.getWithAuth("/solar-grid/users/" + userId)
-      const solarGrids = await response.data.content;
+      const solarGrids = await response.data;
       setSolarGrids(solarGrids);
     };
     getSolarGrids();

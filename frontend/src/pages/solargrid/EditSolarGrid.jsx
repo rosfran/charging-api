@@ -23,7 +23,6 @@ const EditSolarGrid = () => {
   const defaultValues = {
     id: state.id,
     name: state.name,
-    typeId: state.solarGrid.id,
     userId: state.user.id,
   };
   const { enqueueSnackbar } = useSnackbar();
@@ -35,7 +34,7 @@ const EditSolarGrid = () => {
     const getSolarGrids = async () => {
       const userId = AuthService.getCurrentUser()?.id;
       const response = await HttpService.getWithAuth("/solar-grid/users/"+userId);
-      const solarGrids = await response.data.content;
+      const solarGrids = await response.data;
       setSolarGrids(solarGrids);
     };
     getSolarGrids();
