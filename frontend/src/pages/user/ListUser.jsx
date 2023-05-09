@@ -99,8 +99,8 @@ function Row(props) {
 
   useEffect(() => {
     if (open) {
-      const userId = AuthService.getCurrentUser()?.id;
-      HttpService.getWithAuth("/solar-grid/users/" + userId)
+      //const userId = AuthService.getCurrentUser()?.id;
+      HttpService.getWithAuth("/solar-grid/users/" + id)
         .then((response) => {
           setSolarGrids(response.data);
         })
