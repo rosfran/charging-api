@@ -3,6 +3,7 @@ package com.fastned.solarcharging.service;
 import com.fastned.solarcharging.common.Constants;
 import com.fastned.solarcharging.dto.mapper.NetworkRequestMapper;
 import com.fastned.solarcharging.dto.request.SolarGridRequest;
+import com.fastned.solarcharging.dto.response.NetworkResponse;
 import com.fastned.solarcharging.dto.response.SolarGridResponse;
 import com.fastned.solarcharging.exception.ElementAlreadyExistsException;
 import com.fastned.solarcharging.exception.NoSuchElementFoundException;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,8 +70,16 @@ public class SolarGridService {
         if ( lstNetworks.size() == 0 ) {
             throw new  NoSuchElementFoundException(Constants.NOT_FOUND_NETWORK);
         }
-        return solarGridRepository.findAllByNetworkId(lstNetworks.get(0).getId())
-                .stream().map(solarGridResponseMapper::toDto).toList();
+
+        List<SolarGridResponse> resp = new ArrayList<>();
+
+        // iterates over all networks, and push all SolarGridResponse for each Network
+        for (final Network n : lstNetworks ) {
+            resp.addAll(solarGridRepository.findAllByNetworkId(n.getId())
+                    .stream().map(solarGridResponseMapper::toDto).toList());
+        }
+
+        return resp;
     }
 
     /**

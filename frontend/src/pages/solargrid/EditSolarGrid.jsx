@@ -22,13 +22,13 @@ const EditSolarGrid = () => {
   const { state } = useLocation();
   const defaultValues = {
     id: state.id,
-    name: state.name,
-    userId: state.user.id,
-  };
+    name: state.name
+   };
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState(defaultValues);
   const [solarGrids, setSolarGrids] = useState([]);
+  const [networks, setNetworks] = useState([]);
 
   useEffect(() => {
     const getSolarGrids = async () => {
@@ -39,6 +39,16 @@ const EditSolarGrid = () => {
     };
     getSolarGrids();
   }, []);
+
+  useEffect(() => {
+      const getNetworks = async () => {
+        const userId = AuthService.getCurrentUser()?.id;
+        const response = await HttpService.getWithAuth("/network/users/"+userId);
+        const networks = await response.data;
+        setNetworks(networks);
+      };
+      getNetworks();
+    }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
